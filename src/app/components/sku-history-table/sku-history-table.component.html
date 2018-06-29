@@ -1,0 +1,25 @@
+
+<div class="mat-elevation-z8" matSort matSortActive="time" matSortDirection="desc" matSortDisableClear>
+  <mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="sku">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> SKU </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.sku}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="location">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.location}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="atsqty">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.atsqty}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="time">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.time}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+
+
