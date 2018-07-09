@@ -3,7 +3,8 @@ import { HttpClient }   from '@angular/common/http';
 import { Observable, of } from "rxjs";
 import { catchError } from 'rxjs/operators';
 import { SkuHistoryEntry } from '../models/skuHistoryEntry.model';
-import { SkuAvailableEntry } from '../models/skuAvailableEntry.model';
+import { SkuAvailableEntry } from '../models/skuAvailableEntry.model'; 
+import { productInfoEntry } from '../models/productInfoEntry.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,4 +27,12 @@ export class CandyJarService {
     return this.http.get<SkuAvailableEntry []>(url).pipe(
       catchError(() => of([])));
   }
+
+  getProductInfoEntry(sku: string): Observable<productInfoEntry []>{
+    const url = `${this.serviceUrl}sku?sku=${sku}`
+    return this.http.get<productInfoEntry []>(url).pipe(
+      catchError(() => of([])));
+  }
+
+
 }

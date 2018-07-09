@@ -11,6 +11,7 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { CommunicationService } from './services/communication.service';
 import { SkuAvailabilityTableComponent } from './components/sku-availability-table/sku-availability-table.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ProductInfoTableComponent } from './components/product-info-table/product-info-table.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     SkuHistoryTableComponent,
     SearchBarComponent,
     SkuAvailabilityTableComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProductInfoTableComponent
   ],
   imports: [
     BrowserModule,
