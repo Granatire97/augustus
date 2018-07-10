@@ -1,4 +1,5 @@
-<div class="mat-elevation-z8" matSort matSortActive="time" matSortDirection="desc" matSortDisableClear>
+<h4 *ngIf= "show">SKU Inventory Sync History</h4>
+<div *ngIf= "show" class="mat-elevation-z8" matSort matSortActive="time" matSortDirection="desc" matSortDisableClear>
   <mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="sku">
       <mat-header-cell *matHeaderCellDef mat-sort-header> SKU </mat-header-cell>

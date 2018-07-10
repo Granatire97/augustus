@@ -13,6 +13,7 @@ import { SkuAvailabilityTableComponent } from './components/sku-availability-tab
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductInfoTableComponent } from './components/product-info-table/product-info-table.component';
 import { AppRoutingModule } from './/app-routing.module';
+import { ProductDisplayComponent } from './components/product-display/product-display.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { AppRoutingModule } from './/app-routing.module';
     SearchBarComponent,
     SkuAvailabilityTableComponent,
     NavbarComponent,
-    ProductInfoTableComponent
+    ProductInfoTableComponent,
+    ProductDisplayComponent
   ],
   imports: [
     BrowserModule,

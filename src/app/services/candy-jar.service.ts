@@ -11,7 +11,7 @@ import { productInfoEntry } from '../models/productInfoEntry.model';
 })
 export class CandyJarService {
 
-  private serviceUrl = 'http://localhost:8080/';
+  private serviceUrl = 'http://localhost:8012/';
   //'http://localhost:8080/SkuHistory?sku=90496373';
 
   constructor(private http: HttpClient) { }

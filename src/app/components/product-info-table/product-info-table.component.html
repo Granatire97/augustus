@@ -1,4 +1,5 @@
-<div class="mat-elevation-z8 " matSort matSortActive="eCode" matSortDirection="desc" matSortDisableClear id="table">
+<h4 *ngIf= "show">Product Info</h4>
+<div *ngIf= "show" class="mat-elevation-z8 " matSort matSortActive="eCode" matSortDirection="desc" matSortDisableClear id="table">
   <mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="ecode">
       <mat-header-cell *matHeaderCellDef mat-sort-header> eCode </mat-header-cell>
