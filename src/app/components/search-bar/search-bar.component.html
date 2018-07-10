@@ -1,3 +1,9 @@
-<mat-form-field class="example-form-field">
-  <input matInput (keyup.enter)="search($event.target.value)" placeholder="Enter a SKU">
+<mat-form-field class="search-form-field">
+  <input [(ngModel)]="searchInput" matInput id="search-bar" (keyup.enter)="search()" placeholder="Enter an eCode, Style, SKU, or UPC">
 </mat-form-field>
+<mat-radio-group class="code-radio-group" [(ngModel)]="selectedCode">
+  <mat-radio-button class="code-radio-button" *ngFor="let code of codes" [value]="code">
+    {{code}}
+  </mat-radio-button>
+</mat-radio-group>
+<button mat-raised-button id="search-button" (click)="search()">Search</button>

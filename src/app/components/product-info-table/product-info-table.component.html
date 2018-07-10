@@ -1,48 +1,48 @@
-<div class="mat-elevation-z8" matSort matSortActive="eCode" matSortDirection="desc" matSortDisableClear>
+<div class="mat-elevation-z8 " matSort matSortActive="eCode" matSortDirection="desc" matSortDisableClear id="table">
   <mat-table [dataSource]="dataSource">
-    <ng-container matColumnDef="eCode">
+    <ng-container matColumnDef="ecode">
       <mat-header-cell *matHeaderCellDef mat-sort-header> eCode </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.eCode}} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.ecode}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="style">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Style </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.Style}} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.style}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="sku">
       <mat-header-cell *matHeaderCellDef mat-sort-header> SKU </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.SKU}} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.sku}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="upc">
       <mat-header-cell *matHeaderCellDef mat-sort-header> UPC </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.UPC}} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.upc}} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="sUPC">
+    <ng-container matColumnDef="supc">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Secondary/Alternate UPC </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.sUPC}} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.supc}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="presale">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Presale </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.Presale}} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.presale}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="presaleEndDate">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Presale End Date </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.PresaleEndDate}} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.presaleEndDate}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="hotMarket">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Hot Market Item </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.HotMarket}} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.hotMarket}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="hotMarketEndDate">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Hot Market End Date </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.HotMarketEndDate}} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.hotMarketEndDate}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="specialOrder">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Special Order </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.SpecialOrder}} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.specialOrder}} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="vdcEligible">
+    <ng-container matColumnDef="vdceligible">
       <mat-header-cell *matHeaderCellDef mat-sort-header> VDC Eligible </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.VDCEligible}} </mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.vdceligible}} </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

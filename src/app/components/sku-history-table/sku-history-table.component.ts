@@ -17,8 +17,12 @@ export class SkuHistoryTableComponent implements OnInit {
   constructor(private candyJarService: CandyJarService, private communicationService: CommunicationService) {}
 
   ngOnInit() {
-      this.communicationService.change.subscribe(sku => {
-      this.populateTable(sku);
+    this.communicationService.change.subscribe(result => {
+      if(result["productType"] === "SKU"){
+        this.populateTable(result["productCode"]);
+      } else {
+        this.dataSource = null;
+      }
     })
   }
 
@@ -26,8 +30,8 @@ export class SkuHistoryTableComponent implements OnInit {
     sku = sku.trim();
     this.candyJarService.getSkuHistory(sku).subscribe(stream => {
       this.dataSource = new MatTableDataSource<SkuHistoryEntry>(stream);
-      console.log(this.dataSource.data);
       this.dataSource.sort = this.sort;
+      console.log(this.dataSource.data);
     });
   }
 }

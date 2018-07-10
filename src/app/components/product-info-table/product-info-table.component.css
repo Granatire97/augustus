@@ -1,0 +1,38 @@
+.mat-row, .mat-header-row {
+    min-width: 1680px;
+    width: 100%;
+    margin-left: 100x;
+}
+
+.mat-column-ecode {
+    flex: 0 0 250px;
+}
+.mat-column-style {
+    flex: 0 0 100px;
+}
+.mat-column-sku {
+    flex: 0 0 100px;
+}
+.mat-column-upc {
+    flex: 0 0 150px;
+}
+.mat-column-presale {
+    flex: 0 0 100px;
+}
+.mat-column-hotMarket {
+    flex: 0 0 120px;
+}
+
+.mat-elevation-z8 {
+    display: flex;
+    overflow-x: auto;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,.25);
+    -box-shadow: 0 0 1px rgba(255,255,255,.25);
+  }

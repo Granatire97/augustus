@@ -17,22 +17,47 @@ export class CandyJarService {
   constructor(private http: HttpClient) { }
 
   getSkuHistory(sku: string): Observable<SkuHistoryEntry []> {
+    if(sku.length > 8){
+      sku = sku.replace("0", "");
+    }
     const url = `${this.serviceUrl}SkuHistory?sku=${sku}`
     return this.http.get<SkuHistoryEntry []>(url).pipe(
       catchError(() => of([])));
   }
 
   getSkuAvailableQuantity(sku: string): Observable<SkuAvailableEntry []>{
+    if(sku.length > 8){
+      sku = sku.replace("0", "");
+    }
     const url = `${this.serviceUrl}SkuAvailableQuantity?sku=${sku}`
     return this.http.get<SkuAvailableEntry []>(url).pipe(
       catchError(() => of([])));
   }
 
-  getProductInfoEntry(sku: string): Observable<productInfoEntry []>{
-    const url = `${this.serviceUrl}sku?sku=${sku}`
-    return this.http.get<productInfoEntry []>(url).pipe(
-      catchError(() => of([])));
+  getProductInfoEntry(code: string, type: string): Observable<productInfoEntry []>{
+    switch(type){
+      case "eCode": 
+        var url = `${this.serviceUrl}eCode?eCode=${code}`
+        return this.http.get<productInfoEntry []>(url).pipe(
+          catchError(() => of([])));
+      case "Style":
+        var url = `${this.serviceUrl}style?style=${code}`
+        return this.http.get<productInfoEntry []>(url).pipe(
+          catchError(() => of([])));
+      case "SKU":
+        if(code.length < 9){
+          code = "0" + code;
+        }
+        var url = `${this.serviceUrl}sku?sku=${code}`
+        return this.http.get<productInfoEntry []>(url).pipe(
+        catchError(() => of([])));
+      case "UPC":
+        if(code.length < 12){
+          code = code.padStart(12,"0");
+        }
+        var url = `${this.serviceUrl}upc?upc=${code}`
+        return this.http.get<productInfoEntry []>(url).pipe(
+          catchError(() => of([])));
+    }
   }
-
-
 }

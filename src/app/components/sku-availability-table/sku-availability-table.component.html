@@ -1,4 +1,4 @@
-<div class="mat-elevation-z8" matSort matSortActive="quantity" matSortDirection="desc" matSortDisableClear>
+<div class="mat-elevation-z8" matSort matSortActive="time" matSortDirection="desc" matSortDisableClear>
   <mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="sku">
       <mat-header-cell *matHeaderCellDef mat-sort-header> SKU </mat-header-cell>
@@ -15,6 +15,10 @@
     <ng-container matColumnDef="inventoryStatus">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Inventory Status </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.InventoryStatus}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="time">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.Time}} </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

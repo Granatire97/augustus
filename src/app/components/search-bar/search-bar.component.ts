@@ -7,14 +7,15 @@ import { CommunicationService } from '../../services/communication.service';
   styleUrls: ['./search-bar.component.css']
 })
 export class SearchBarComponent implements OnInit {
-
+  searchInput: string;
+  selectedCode: string;
+  codes: string[] = ['eCode', 'Style', 'SKU', 'UPC'];
   constructor(private communicationService: CommunicationService) { }
 
   ngOnInit() {
   }
 
-  search(sku: string){
-    this.communicationService.sendSku(sku);
+  search(){
+    this.communicationService.sendCode(this.searchInput, this.selectedCode);  
   }
-
 }

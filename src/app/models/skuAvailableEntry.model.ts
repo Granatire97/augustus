@@ -3,4 +3,5 @@ export interface SkuAvailableEntry {
     inventoryStatus: string;
     storeNumber: string;
     quantity: string;
+    time: string;
 }

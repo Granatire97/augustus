@@ -12,6 +12,8 @@ import { CommunicationService } from './services/communication.service';
 import { SkuAvailabilityTableComponent } from './components/sku-availability-table/sku-availability-table.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductInfoTableComponent } from './components/product-info-table/product-info-table.component';
+import { AppRoutingModule } from './/app-routing.module';
+
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { ProductInfoTableComponent } from './components/product-info-table/produ
     MatSortModule, 
     MatRadioModule, 
     MatSnackBarModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [CandyJarService, CommunicationService],
   exports: [SkuHistoryTableComponent],

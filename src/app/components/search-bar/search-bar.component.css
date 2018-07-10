@@ -1,0 +1,21 @@
+.code-radio-group {
+    display: inline-flex;
+    flex-direction: row;
+  }
+  
+  .code-radio-button {
+    margin: 15px;
+  }
+  
+  .code-selected-value {
+    margin: 15px 0;
+  }
+
+  .search-form-field {
+      width: 100%;
+  }
+
+  #search-button {
+    color: white;
+    background: #006554;
+  }

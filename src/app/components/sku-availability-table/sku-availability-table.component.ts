@@ -11,14 +11,18 @@ import { CommunicationService } from '../../services/communication.service';
 })
 export class SkuAvailabilityTableComponent implements OnInit {
   dataSource: MatTableDataSource<SkuAvailableEntry>;
-  displayedColumns = ['sku', 'storeNumber', 'quantity', 'inventoryStatus'];
+  displayedColumns = ['sku', 'storeNumber', 'quantity', 'inventoryStatus', 'time'];
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private candyJarService: CandyJarService, private communicationService: CommunicationService) {}
 
   ngOnInit() {
-    this.communicationService.change.subscribe(sku => {
-      this.populateTable(sku);
+    this.communicationService.change.subscribe(result => {
+      if(result["productType"] === "SKU"){
+        this.populateTable(result["productCode"]);
+      } else {
+        this.dataSource = null;
+      }
     })
   }
 

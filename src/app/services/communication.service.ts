@@ -5,11 +5,16 @@ import { Injectable,  Output, EventEmitter } from '@angular/core';
 })
 export class CommunicationService {
 
-  @Output() change: EventEmitter<string> = new EventEmitter();
+  @Output() change: EventEmitter<{}> = new EventEmitter();
 
   constructor() { }
 
-  sendSku(sku: string){
-    this.change.emit(sku);
+  sendCode(code: string, type: string){
+    var result = {};
+    result = {
+      productCode: code,
+      productType: type
+    }
+    this.change.emit(result);
   }
 }

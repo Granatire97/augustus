@@ -1,13 +1,13 @@
 export interface productInfoEntry {
-    eCode : string;
+    ecode : string;
     style : string;
     sku  : string;
     upc : string;
-    sUPC : string;
+    supc : string;
     presale : string;
     presaleEndDate : string;
     hotMarket : string;
     hotMarketEndDate : string;
     specialOrder : string;
-    vdcEligible : string;
+    vdceligible : string;
 }

@@ -12,21 +12,21 @@ import { CommunicationService } from '../../services/communication.service';
 })
 export class ProductInfoTableComponent implements OnInit {
   dataSource: MatTableDataSource<productInfoEntry>;
-  displayedColumns = ['eCode', 'style', 'sku', 'upc', 'sUPC', 'presale', 'presaleEndDate', 'hotMarket', 'hotMarketEndDate', 'specialOrder', 'vdcEligible'];
+  displayedColumns = ['ecode', 'style', 'sku', 'upc', 'supc', 'presale', 'presaleEndDate', 'hotMarket', 'hotMarketEndDate', 'specialOrder', 'vdceligible'];
   @ViewChild(MatSort) sort: MatSort;
   
   constructor(private candyJarService: CandyJarService, private communicationService: CommunicationService) {}
 
   ngOnInit() {
-    this.communicationService.change.subscribe(sku => {
-      this.populateTable(sku);
+    this.communicationService.change.subscribe(result => {
+      this.populateTable(result["productCode"], result["productType"]);
     })
   }
 
 
-  populateTable(sku: string){
-    sku = sku.trim();
-    this.candyJarService.getProductInfoEntry(sku).subscribe(stream => {
+  populateTable(code: string, type: string){
+    code = code.trim();
+    this.candyJarService.getProductInfoEntry(code, type).subscribe(stream => {
       this.dataSource = new MatTableDataSource<productInfoEntry>(stream);
       this.dataSource.sort = this.sort;
       console.log(this.dataSource.data);
