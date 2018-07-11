@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes  } from '@angular/router';
 import { ProductInfoTableComponent } from './components/product-info-table/product-info-table.component';
 import { AppComponent } from './app.component';
 import { ProductDisplayComponent } from './components/product-display/product-display.component';
@@ -11,7 +11,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
+  imports: [ RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}) ],
   exports: [ RouterModule],
 })
 export class AppRoutingModule { }

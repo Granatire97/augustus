@@ -1,27 +1,29 @@
 <h4 *ngIf= "show">SKU Inventory Sync History</h4>
-<div *ngIf= "show" class="mat-elevation-z8" matSort matSortActive="time" matSortDirection="desc" matSortDisableClear>
+<div *ngIf= "show" class="mat-elevation-z8" matSort matSortActive="Time" matSortDirection="desc" matSortDisableClear>
   <mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="sku">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> SKU </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> SKU </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.SKU}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="storeNumber">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Store Number </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Store Number </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.StoreNumber}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="quantity">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Available Quantity </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Available Quantity </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.AvailableQuantity}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="inventoryStatus">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Inventory Status </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Inventory Status </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.InventoryStatus}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="time">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Time </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.Time}} </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 </div>
+<h4 *ngIf= "showError && show" class="error-message">There was no data found for the desired input. Please check your input and try again.</h4>
+<h4 *ngIf= "historyError && show" class="no-history-message"><i>There was no history found for the desired input.</i></h4>

@@ -12,6 +12,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SkuHistoryTableComponent implements OnInit {
   show: boolean = false;
+  showError: boolean = false;
+  infoFound: boolean;
+  historyError: boolean = false;
   dataSource: MatTableDataSource<SkuHistoryEntry>;
   displayedColumns = ['sku', 'location', 'atsqty', 'time'];
   @ViewChild(MatSort) sort: MatSort;
@@ -22,13 +25,18 @@ export class SkuHistoryTableComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.communicationService.change.subscribe(result => {
+    this.communicationService.currentCode.subscribe(result => {
       if(result["productType"] === "SKU"){
         this.populateTable(result["productCode"]);
       } else {
         this.dataSource = null;
         this.show = false;
+        this.showError = false;
+        this.historyError = false;
       }
+    })
+    this.communicationService.currentFound.subscribe(found => {
+      this.infoFound = found;
     })
     const type = this.route.snapshot.paramMap.get('type');
     const code = this.route.snapshot.paramMap.get('code');
@@ -37,16 +45,31 @@ export class SkuHistoryTableComponent implements OnInit {
     } else {
       this.dataSource = null;
       this.show = false;
+      this.showError = false;
+      this.historyError = false;
     }
   }
 
   populateTable(sku: string){
+    this.showError = false;
+    this.historyError = false;
     this.show = true;
     sku = sku.trim();
     this.candyJarService.getSkuHistory(sku).subscribe(stream => {
       this.dataSource = new MatTableDataSource<SkuHistoryEntry>(stream);
       this.dataSource.sort = this.sort;
-      console.log(this.dataSource.data);
+      if (this.dataSource.data.length == 0){
+        if(this.infoFound){
+          this.historyError = true;
+          this.showError = false;
+        } else {
+          this.showError = true;
+          this.historyError = false;
+        }
+      } else {
+        this.showError = false;
+        this.historyError = false;
+      }
     });
   }
 }

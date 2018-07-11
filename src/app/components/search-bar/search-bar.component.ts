@@ -29,6 +29,6 @@ export class SearchBarComponent implements OnInit {
 
   search(){
     this.router.navigate(['info', this.selectedCode, this.searchInput])
-    this.communicationService.sendCode(this.searchInput, this.selectedCode);  
+    this.communicationService.updateCode(this.searchInput, this.selectedCode);  
   }
 }

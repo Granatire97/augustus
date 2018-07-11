@@ -1,5 +1,5 @@
 .mat-row, .mat-header-row {
-    min-width: 1680px;
+    min-width: 1855px;
     width: 100%;
     margin-left: 100x;
 }
@@ -16,8 +16,14 @@
 .mat-column-upc {
     flex: 0 0 150px;
 }
+
+.mat-column-description {
+    overflow-x: scroll;
+}
+
 .mat-column-presale {
     flex: 0 0 100px;
+    margin-left: 15px;
 }
 .mat-column-hotMarket {
     flex: 0 0 120px;
@@ -28,11 +34,15 @@
     overflow-x: auto;
 }
 
-::-webkit-scrollbar {
+div.mat-elevation-z8::-webkit-scrollbar {
     -webkit-appearance: none;
   }
   
-  ::-webkit-scrollbar-thumb {
+div.mat-elevation-z8::-webkit-scrollbar-thumb {
     background-color: rgba(0,0,0,.25);
     -box-shadow: 0 0 1px rgba(255,255,255,.25);
   }
+
+.error-message {
+    color: red;
+}

@@ -4,6 +4,7 @@ export interface productInfoEntry {
     sku  : string;
     upc : string;
     supc : string;
+    description: string;
     presale : string;
     presaleEndDate : string;
     hotMarket : string;

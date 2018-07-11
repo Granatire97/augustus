@@ -1,4 +1,4 @@
-<h4 *ngIf= "show">Product Info</h4>
+<h3 *ngIf= "show">Product Info</h3>
 <div *ngIf= "show" class="mat-elevation-z8 " matSort matSortActive="eCode" matSortDirection="desc" matSortDisableClear id="table">
   <mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="ecode">
@@ -21,6 +21,10 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header> Secondary/Alternate UPC </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.supc}} </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+      </ng-container>
     <ng-container matColumnDef="presale">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Presale </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.presale}} </mat-cell>
@@ -49,3 +53,4 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 </div>
+<h4 *ngIf= "showError && show" class="error-message">There was no data found for the desired input. Please check your input and try again.</h4>
