@@ -10,7 +10,7 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class SearchBarComponent implements OnInit {
   searchInput = new FormControl('', [Validators.required]);
-  selectedCode: string;
+  selectedCode = new FormControl('', [Validators.required]);
   presale: string;
   hotmarket: string;
   specialOrder: string;
@@ -22,6 +22,7 @@ export class SearchBarComponent implements OnInit {
   codes: string[] = ['eCode', 'Style', 'SKU', 'UPC'];
   booleanOptions: string[] = ['All', '0', '1'];
   yesNoOptions: string[] =['All', 'N', 'Y'];
+  searchAttempted: boolean = false;
 
   
   constructor(
@@ -35,14 +36,17 @@ export class SearchBarComponent implements OnInit {
     const code = this.route.snapshot.paramMap.get('code');
     if(type != null && code != null){
       this.searchInput.setValue(code);
-      this.selectedCode = type;
+      this.selectedCode.setValue(type);
     }
   }
 
   search(){
+    this.searchAttempted = true;
+    if(this.searchInput.value != "" && this.selectedCode.value != ""){
       this.router.navigate(['info', this.selectedCode, this.searchInput])
-      this.communicationService.updateCode(this.searchInput.value, this.selectedCode);
+      this.communicationService.updateCode(this.searchInput.value, this.selectedCode.value);
       this.communicationService.updateFilters(this.presale, this.hotmarket, this.specialOrder, this.vdcEligible);  
+    }
   }
 
   clear(){
