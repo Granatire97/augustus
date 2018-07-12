@@ -15,6 +15,8 @@ export class ProductInfoTableComponent implements OnInit {
   show: boolean = false;
   showError: boolean = false;
   dataSource: MatTableDataSource<productInfoEntry>;
+  
+  filters: {presale: '', hotmarket: '', specialOrder: '', vdceligible: ''};
   displayedColumns = ['ecode', 'style', 'sku', 'upc', 'supc', 'description', 'presale', 'presaleEndDate', 'hotMarket', 'hotMarketEndDate', 'specialOrder', 'vdceligible'];
   @ViewChild(MatSort) sort: MatSort;
   
@@ -39,6 +41,7 @@ export class ProductInfoTableComponent implements OnInit {
       this.dataSource = null;
       this.show = false;
     }
+    
   }
 
 
@@ -55,11 +58,25 @@ export class ProductInfoTableComponent implements OnInit {
       } else {
         this.communicationService.infoFound(true);
         this.showError = false;
+        this.dataSource.filterPredicate = this.createFilter();
+        this.communicationService.currentFilters.subscribe(filters => {
+          this.filters = filters;
+          console.log(filters);
+          this.dataSource.filter = JSON.stringify(this.filters);
+        })
       }
     });
+    
+    
+    
   }
-
-
-
-
+  createFilter() {
+    let filterFunction = function(data, filter) : boolean {
+      let searchTerms = JSON.parse(filter)
+      return data['presale'].toString().indexOf(searchTerms['presale']) != -1 &&
+      data['vdceligible'].toString().indexOf(searchTerms['vdceligible']) != -1 
+          
+    }
+    return filterFunction
+  }
 }

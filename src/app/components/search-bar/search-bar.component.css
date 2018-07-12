@@ -12,10 +12,19 @@
   }
 
   .search-form-field {
-      width: 100%;
+      width: 30%;
   }
 
   #search-button {
     color: white;
     background: #006554;
+  }
+
+  #clear-button {
+    color: black;
+    background: orange;
+  }
+
+  .advanced-search {
+    width: 50%;
   }

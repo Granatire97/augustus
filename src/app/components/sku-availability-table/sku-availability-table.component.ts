@@ -16,7 +16,7 @@ export class SkuAvailabilityTableComponent implements OnInit {
   infoFound: boolean;
   historyError: boolean = false;
   dataSource: MatTableDataSource<SkuAvailableEntry>;
-  displayedColumns = ['sku', 'storeNumber', 'quantity', 'inventoryStatus', 'time'];
+  displayedColumns = ['sku', 'quantity', 'inventoryStatus', 'time'];
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private candyJarService: CandyJarService, 
@@ -60,7 +60,6 @@ export class SkuAvailabilityTableComponent implements OnInit {
       this.dataSource = new MatTableDataSource<SkuAvailableEntry>(stream);
       this.dataSource.sort = this.sort;
       if (this.dataSource.data.length == 0){
-        console.log(this.infoFound);
         if(this.infoFound){
           this.historyError = true;
           this.showError = false;

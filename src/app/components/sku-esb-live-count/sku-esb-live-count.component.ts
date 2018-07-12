@@ -5,26 +5,30 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 import { CommunicationService } from '../../services/communication.service';
 import { ActivatedRoute } from '@angular/router';
 import { EsbInventoryService } from '../../services/esb-inventory.service';
+import { EsbLiveCountEntry } from '../../models/EsbLiveCountEntry.model';
 
 @Component({
-  selector: 'app-sku-history-table',
-  templateUrl: './sku-history-table.component.html',
-  styleUrls: ['./sku-history-table.component.css']
+  selector: 'app-sku-esb-live-count',
+  templateUrl: './sku-esb-live-count.component.html',
+  styleUrls: ['./sku-esb-live-count.component.css']
 })
-export class SkuHistoryTableComponent implements OnInit {
+export class SkuEsbLiveCountComponent implements OnInit {
   show: boolean = false;
   showError: boolean = false;
   infoFound: boolean;
   historyError: boolean = false;
-  dataSource: MatTableDataSource<SkuHistoryEntry>;
+  dataSource: MatTableDataSource<EsbLiveCountEntry>;
   displayedColumns = ['sku', 'atsqty', 'time'];
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private candyJarService: CandyJarService, 
+  constructor(
     private communicationService: CommunicationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private esbInventoryService: EsbInventoryService
   ) {}
-
+  insert(str, index, value) {
+    return str.substr(0, index) + value + str.substr(index);
+  }
   ngOnInit() {
     this.communicationService.currentCode.subscribe(result => {
       if(result["productType"] === "SKU"){
@@ -56,8 +60,22 @@ export class SkuHistoryTableComponent implements OnInit {
     this.historyError = false;
     this.show = true;
     sku = sku.trim();
-    this.candyJarService.getSkuHistory(sku).subscribe(stream => {
-      this.dataSource = new MatTableDataSource<SkuHistoryEntry>(stream);
+    this.esbInventoryService.getESBInventory('0',sku).subscribe(stream => {
+    
+      var i;
+      for(i = 0; i< stream["data"]["skus"].length; i++){
+        if(stream["data"]["skus"][i] != null){
+          stream["data"]["skus"][i]["time"] = this.insert(stream["data"]["skus"][i]["time"],4,'-');
+          stream["data"]["skus"][i]["time"] = this.insert(stream["data"]["skus"][i]["time"],7,'-');
+          stream["data"]["skus"][i]["time"] = this.insert(stream["data"]["skus"][i]["time"],10,' ');
+          stream["data"]["skus"][i]["time"] = this.insert(stream["data"]["skus"][i]["time"],13,':');
+          stream["data"]["skus"][i]["time"] = this.insert(stream["data"]["skus"][i]["time"],16,':');
+          stream["data"]["skus"][i]["time"] = this.insert(stream["data"]["skus"][i]["time"],19,'.');
+        } else {
+          stream["data"]["skus"].splice(i);
+        }
+    }
+      this.dataSource = new MatTableDataSource<EsbLiveCountEntry>(stream["data"]["skus"]);
       this.dataSource.sort = this.sort;
       if (this.dataSource.data.length == 0){
         if(this.infoFound){

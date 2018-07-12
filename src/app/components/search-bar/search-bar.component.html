@@ -1,9 +1,81 @@
 <mat-form-field class="search-form-field">
-  <input [(ngModel)]="searchInput" matInput id="search-bar" (keyup.enter)="search()" placeholder="Enter an eCode, Style, SKU, or UPC">
+  <input [formControl]="searchInput" matInput id="search-bar" (keyup.enter)="search()" placeholder="Enter an eCode, Style, SKU, or UPC">
+  <mat-error *ngIf="searchInput.hasError('required')">Please enter a product identifier</mat-error>
 </mat-form-field>
 <mat-radio-group class="code-radio-group" [(ngModel)]="selectedCode">
   <mat-radio-button class="code-radio-button" *ngFor="let code of codes" [value]="code">
     {{code}}
   </mat-radio-button>
 </mat-radio-group>
+<br>
+<mat-expansion-panel class="advanced-search" >
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Advanced Filters
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <mat-form-field>
+    <mat-select placeholder="Presale" [(ngModel)]="presale">
+      <mat-option *ngFor="let option of booleanOptions" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Presale End Date" [(ngModel)]="presaleStart">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  &nbsp;&nbsp;&nbsp;to&nbsp;&nbsp;&nbsp;
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker2" placeholder="Presale End Date" [(ngModel)]="presaleEnd">
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+  </mat-form-field>
+<br>
+<mat-form-field>
+  <mat-select placeholder="Hot Market" [(ngModel)]="hotmarket">
+    <mat-option *ngFor="let option of booleanOptions" [value]="option">
+      {{option}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<br>
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker3" placeholder="Hot Market End Date" [(ngModel)]="hotmarketStart">
+    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+    <mat-datepicker #picker3></mat-datepicker>
+  </mat-form-field>
+  &nbsp;&nbsp;&nbsp;to&nbsp;&nbsp;&nbsp;
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker4" placeholder="Hot Market End Date" [(ngModel)]="hotmarketEnd">
+    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+    <mat-datepicker #picker4></mat-datepicker>
+  </mat-form-field>
+<br>
+  <mat-form-field>
+    <mat-select placeholder="Special Order" [(ngModel)]="specialOrder">
+      <mat-option *ngFor="let option of booleanOptions" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+<br>
+  <mat-form-field>
+    <mat-select placeholder="VDC Eligbible" [(ngModel)]="vdcEligible">
+      <mat-option *ngFor="let option of yesNoOptions" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <button mat-raised-button id="clear-button" (click)="clear()">Clear</button>
+</mat-expansion-panel>
+<br>
 <button mat-raised-button id="search-button" (click)="search()">Search</button>
+
+
+
+

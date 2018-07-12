@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommunicationService } from '../../services/communication.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import {RouterModule} from '@angular/router';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-search-bar',
@@ -9,9 +9,21 @@ import {RouterModule} from '@angular/router';
   styleUrls: ['./search-bar.component.css']
 })
 export class SearchBarComponent implements OnInit {
-  searchInput: string;
+  searchInput = new FormControl('', [Validators.required]);
   selectedCode: string;
+  presale: string;
+  hotmarket: string;
+  specialOrder: string;
+  vdcEligible: string;
+  presaleStart: string;
+  presaleEnd: string;
+  hotmarketStart: string;
+  hotmarketEnd: string;
   codes: string[] = ['eCode', 'Style', 'SKU', 'UPC'];
+  booleanOptions: string[] = ['All', '0', '1'];
+  yesNoOptions: string[] =['All', 'N', 'Y'];
+
+  
   constructor(
     private communicationService: CommunicationService,
     private route: ActivatedRoute,
@@ -22,13 +34,25 @@ export class SearchBarComponent implements OnInit {
     const type = this.route.snapshot.paramMap.get('type');
     const code = this.route.snapshot.paramMap.get('code');
     if(type != null && code != null){
-      this.searchInput = code;
+      this.searchInput.setValue(code);
       this.selectedCode = type;
     }
   }
 
   search(){
-    this.router.navigate(['info', this.selectedCode, this.searchInput])
-    this.communicationService.updateCode(this.searchInput, this.selectedCode);  
+      this.router.navigate(['info', this.selectedCode, this.searchInput])
+      this.communicationService.updateCode(this.searchInput.value, this.selectedCode);
+      this.communicationService.updateFilters(this.presale, this.hotmarket, this.specialOrder, this.vdcEligible);  
+  }
+
+  clear(){
+    this.presale = "";
+    this.hotmarket = "";
+    this.specialOrder = "";
+    this.vdcEligible = "";
+    this.presaleStart = "";
+    this.presaleEnd = "";
+    this.hotmarketStart = "";
+    this.hotmarketEnd = "";
   }
 }
