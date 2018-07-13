@@ -32,6 +32,7 @@ export class SearchBarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.clear();
     const type = this.route.snapshot.paramMap.get('type');
     const code = this.route.snapshot.paramMap.get('code');
     if(type != null && code != null){
@@ -43,7 +44,7 @@ export class SearchBarComponent implements OnInit {
   search(){
     this.searchAttempted = true;
     if(this.searchInput.value != "" && this.selectedCode.value != ""){
-      this.router.navigate(['info', this.selectedCode, this.searchInput])
+      this.router.navigate(['info', this.selectedCode.value, this.searchInput.value])
       this.communicationService.updateCode(this.searchInput.value, this.selectedCode.value);
       this.communicationService.updateFilters(this.presale, this.hotmarket, this.specialOrder, this.vdcEligible);  
     }

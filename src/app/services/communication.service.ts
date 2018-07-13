@@ -26,7 +26,6 @@ export class CommunicationService {
       'specialOrder': specialOrder, 
       'vdceligible': vdceligible
     });
-    console.log(this.filters);
   }
 
   infoFound(found: boolean){

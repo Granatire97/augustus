@@ -8,7 +8,7 @@
   </mat-radio-button>
   <mat-error *ngIf="selectedCode.hasError('required') && searchAttempted">Please select an identifier</mat-error>
 </mat-radio-group>
-<br>
+<button mat-raised-button id="search-button" (click)="search()">Search</button>
 <mat-expansion-panel class="advanced-search" >
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -74,7 +74,6 @@
   <button mat-raised-button id="clear-button" (click)="clear()">Clear</button>
 </mat-expansion-panel>
 <br>
-<button mat-raised-button id="search-button" (click)="search()">Search</button>
 
 
 

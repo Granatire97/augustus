@@ -19,6 +19,7 @@
 
 .mat-column-description {
     overflow-x: scroll;
+    flex: 0 0 250px;
 }
 
 .mat-column-presale {

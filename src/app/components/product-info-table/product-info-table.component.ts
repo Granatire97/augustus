@@ -16,7 +16,7 @@ export class ProductInfoTableComponent implements OnInit {
   showError: boolean = false;
   dataSource: MatTableDataSource<productInfoEntry>;
   
-  filters: {presale: '', hotmarket: '', specialOrder: '', vdceligible: ''};
+  filters: {"presale": "", "hotmarket": "", "specialOrder": "", "vdceligible": ""};
   displayedColumns = ['ecode', 'style', 'sku', 'upc', 'supc', 'description', 'presale', 'presaleEndDate', 'hotMarket', 'hotMarketEndDate', 'specialOrder', 'vdceligible'];
   @ViewChild(MatSort) sort: MatSort;
   
@@ -60,9 +60,11 @@ export class ProductInfoTableComponent implements OnInit {
         this.showError = false;
         this.dataSource.filterPredicate = this.createFilter();
         this.communicationService.currentFilters.subscribe(filters => {
-          this.filters = filters;
+          console.log(this.filters);
           console.log(filters);
+          this.filters = filters;
           this.dataSource.filter = JSON.stringify(this.filters);
+          console.log(this.dataSource.filter);
         })
       }
     });
@@ -71,11 +73,25 @@ export class ProductInfoTableComponent implements OnInit {
     
   }
   createFilter() {
+    var flags = [];
     let filterFunction = function(data, filter) : boolean {
       let searchTerms = JSON.parse(filter)
-      return data['presale'].toString().indexOf(searchTerms['presale']) != -1 &&
-      data['vdceligible'].toString().indexOf(searchTerms['vdceligible']) != -1 
-          
+      for(var key in searchTerms){
+            if(data[key] != null){
+              if(searchTerms[key] === "All" || searchTerms[key].length === 0 || searchTerms[key] === ""){
+                flags.push(true);
+              } else {
+                flags.push(data[key].toString().indexOf(searchTerms[key]) != -1);
+              }
+            
+        } 
+    }
+      var result = true;
+      var i;
+      for (i = 0; i < flags.length; i++){
+        result = result && flags[i];
+      }    
+      return result;
     }
     return filterFunction
   }
