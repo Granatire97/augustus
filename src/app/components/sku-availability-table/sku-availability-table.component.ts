@@ -12,9 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SkuAvailabilityTableComponent implements OnInit {
   show: boolean = false;
-  showError: boolean = false;
   infoFound: boolean;
-  historyError: boolean = false;
   dataSource: MatTableDataSource<SkuAvailableEntry>;
   displayedColumns = ['sku', 'quantity', 'inventoryStatus', 'time'];
   @ViewChild(MatSort) sort: MatSort;
@@ -31,14 +29,9 @@ export class SkuAvailabilityTableComponent implements OnInit {
       } else {
         this.dataSource = null;
         this.show = false;
-        this.showError = false;
-        this.historyError = false;
       }
     })
 
-    this.communicationService.currentFound.subscribe(found => {
-      this.infoFound = found;
-    })
     const type = this.route.snapshot.paramMap.get('type');
     const code = this.route.snapshot.paramMap.get('code');
     if(type == "SKU" && code != null){
@@ -46,31 +39,18 @@ export class SkuAvailabilityTableComponent implements OnInit {
     } else {
       this.dataSource = null;
       this.show = false;
-      this.showError = false;
-      this.historyError = false;
     }
   }
 
   populateTable(sku: string){
-    this.showError = false;
-    this.historyError = false;
-    this.show = true;
+    this.show = false;
     sku = sku.trim();
     this.candyJarService.getSkuAvailableQuantity(sku).subscribe(stream => {
       this.dataSource = new MatTableDataSource<SkuAvailableEntry>(stream);
       this.dataSource.sort = this.sort;
-      if (this.dataSource.data.length == 0){
-        if(this.infoFound){
-          this.historyError = true;
-          this.showError = false;
-        } else {
-          this.showError = true;
-          this.historyError = false;
-        }
-      } else {
-        this.showError = false;
-        this.historyError = false;
-      }
+      if (this.dataSource.data.length != 0){
+        this.show = true;
+      } 
     });
   }
 

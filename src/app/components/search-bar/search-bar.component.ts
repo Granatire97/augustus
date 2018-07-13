@@ -11,17 +11,7 @@ import { FormControl, Validators } from '@angular/forms';
 export class SearchBarComponent implements OnInit {
   searchInput = new FormControl('', [Validators.required]);
   selectedCode = new FormControl('', [Validators.required]);
-  presale: string;
-  hotmarket: string;
-  specialOrder: string;
-  vdcEligible: string;
-  presaleStart: string;
-  presaleEnd: string;
-  hotmarketStart: string;
-  hotmarketEnd: string;
   codes: string[] = ['eCode', 'Style', 'SKU', 'UPC'];
-  booleanOptions: string[] = ['All', '0', '1'];
-  yesNoOptions: string[] =['All', 'N', 'Y'];
   searchAttempted: boolean = false;
 
   
@@ -32,7 +22,6 @@ export class SearchBarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.clear();
     const type = this.route.snapshot.paramMap.get('type');
     const code = this.route.snapshot.paramMap.get('code');
     if(type != null && code != null){
@@ -46,18 +35,8 @@ export class SearchBarComponent implements OnInit {
     if(this.searchInput.value != "" && this.selectedCode.value != ""){
       this.router.navigate(['info', this.selectedCode.value, this.searchInput.value])
       this.communicationService.updateCode(this.searchInput.value, this.selectedCode.value);
-      this.communicationService.updateFilters(this.presale, this.hotmarket, this.specialOrder, this.vdcEligible);  
     }
   }
 
-  clear(){
-    this.presale = "";
-    this.hotmarket = "";
-    this.specialOrder = "";
-    this.vdcEligible = "";
-    this.presaleStart = "";
-    this.presaleEnd = "";
-    this.hotmarketStart = "";
-    this.hotmarketEnd = "";
-  }
+
 }

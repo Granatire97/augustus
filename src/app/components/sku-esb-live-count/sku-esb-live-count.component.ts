@@ -14,9 +14,7 @@ import { EsbLiveCountEntry } from '../../models/EsbLiveCountEntry.model';
 })
 export class SkuEsbLiveCountComponent implements OnInit {
   show: boolean = false;
-  showError: boolean = false;
   infoFound: boolean;
-  historyError: boolean = false;
   dataSource: MatTableDataSource<EsbLiveCountEntry>;
   displayedColumns = ['sku', 'atsqty', 'time'];
   @ViewChild(MatSort) sort: MatSort;
@@ -36,12 +34,7 @@ export class SkuEsbLiveCountComponent implements OnInit {
       } else {
         this.dataSource = null;
         this.show = false;
-        this.showError = false;
-        this.historyError = false;
       }
-    })
-    this.communicationService.currentFound.subscribe(found => {
-      this.infoFound = found;
     })
     const type = this.route.snapshot.paramMap.get('type');
     const code = this.route.snapshot.paramMap.get('code');
@@ -50,15 +43,11 @@ export class SkuEsbLiveCountComponent implements OnInit {
     } else {
       this.dataSource = null;
       this.show = false;
-      this.showError = false;
-      this.historyError = false;
     }
   }
 
   populateTable(sku: string){
-    this.showError = false;
-    this.historyError = false;
-    this.show = true;
+    this.show = false;
     sku = sku.trim();
     this.esbInventoryService.getESBInventory('0',sku).subscribe(stream => {
     
@@ -77,18 +66,9 @@ export class SkuEsbLiveCountComponent implements OnInit {
     }
       this.dataSource = new MatTableDataSource<EsbLiveCountEntry>(stream["data"]["skus"]);
       this.dataSource.sort = this.sort;
-      if (this.dataSource.data.length == 0){
-        if(this.infoFound){
-          this.historyError = true;
-          this.showError = false;
-        } else {
-          this.showError = true;
-          this.historyError = false;
-        }
-      } else {
-        this.showError = false;
-        this.historyError = false;
-      }
+      if (this.dataSource.data.length != 0){
+        this.show = true;
+      } 
     });
   }
 }
