@@ -28,3 +28,7 @@
   .advanced-search {
     width: 50%;
   }
+
+  #clear-button {
+    float: right;
+  }
