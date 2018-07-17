@@ -12,7 +12,7 @@ export class EsbInventoryService {
 
 
   constructor(private http: HttpClient) { }
-  
+  /*
   getESBInventory(location: string, sku: string): Observable<EsbLiveCountEntry []> {
     const serviceUrl = this.getUrl();
     console.log(serviceUrl);
@@ -32,7 +32,7 @@ export class EsbInventoryService {
     return this.http.post<EsbLiveCountEntry[]>(url,params, httpOptions).pipe(
       catchError(() => of([])));
   }
-
+*/
   getUrl(){
     switch(window.location.hostname){
       case 'eomint.dcsg.com':

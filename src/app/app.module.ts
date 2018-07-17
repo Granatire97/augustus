@@ -15,6 +15,8 @@ import { ProductInfoTableComponent } from './components/product-info-table/produ
 import { AppRoutingModule } from './/app-routing.module';
 import { ProductDisplayComponent } from './components/product-display/product-display.component';
 import { SkuEsbLiveCountComponent } from './components/sku-esb-live-count/sku-esb-live-count.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 
 
 
@@ -57,7 +59,7 @@ import { SkuEsbLiveCountComponent } from './components/sku-esb-live-count/sku-es
     MatSelectModule,
     ReactiveFormsModule
   ],
-  providers: [CandyJarService, CommunicationService],
+  providers: [CandyJarService, CommunicationService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

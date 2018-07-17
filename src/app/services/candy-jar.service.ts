@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { SkuHistoryEntry } from '../models/skuHistoryEntry.model';
 import { SkuAvailableEntry } from '../models/skuAvailableEntry.model'; 
 import { productInfoEntry } from '../models/productInfoEntry.model';
+import { EsbLiveCountEntry } from '../models/EsbLiveCountEntry.model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,5 +67,17 @@ export class CandyJarService {
         return this.http.get<productInfoEntry []>(url).pipe(
           catchError(() => of([])));
     }
+  }
+
+  getESBInventory(sku: string): Observable<EsbLiveCountEntry []> {
+    if(sku.length > 8){
+      sku = sku.replace("0", "");
+    }
+    if(sku.length < 8){
+      sku = "999999999999";
+    }
+    const url = `${this.serviceUrl}EsbLiveCount?sku=${sku}`;
+    return this.http.get<EsbLiveCountEntry []>(url).pipe(
+      catchError(() => of([])));
   }
 }

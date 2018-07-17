@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CandyJarService } from '../../services/candy-jar.service';
-import { SkuHistoryEntry } from '../../models/skuHistoryEntry.model';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { CommunicationService } from '../../services/communication.service';
 import { ActivatedRoute } from '@angular/router';
-import { EsbInventoryService } from '../../services/esb-inventory.service';
 import { EsbLiveCountEntry } from '../../models/EsbLiveCountEntry.model';
 
 @Component({
@@ -23,7 +21,7 @@ export class SkuEsbLiveCountComponent implements OnInit {
   constructor(
     private communicationService: CommunicationService,
     private route: ActivatedRoute,
-    private esbInventoryService: EsbInventoryService
+    private candyJarService: CandyJarService
   ) {}
   insert(str, index, value) {
     return str.substr(0, index) + value + str.substr(index);
@@ -57,7 +55,7 @@ export class SkuEsbLiveCountComponent implements OnInit {
   populateTable(sku: string){
     this.show = false;
     sku = sku.trim();
-    this.esbInventoryService.getESBInventory('0',sku).subscribe(stream => {
+    this.candyJarService.getESBInventory(sku).subscribe(stream => {
     
       var i;
       for(i = 0; i< stream["data"]["skus"].length; i++){
