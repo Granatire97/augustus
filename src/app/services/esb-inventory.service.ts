@@ -12,7 +12,7 @@ export class EsbInventoryService {
 
 
   constructor(private http: HttpClient) { }
-
+  
   getESBInventory(location: string, sku: string): Observable<EsbLiveCountEntry []> {
     const serviceUrl = this.getUrl();
     console.log(serviceUrl);
@@ -35,16 +35,16 @@ export class EsbInventoryService {
 
   getUrl(){
     switch(window.location.hostname){
-      case 'eomint.dcsg.com/':
-      case 'dkha0326.dcsg.com/':
-      case 'candyjar.dcsg.com/':
+      case 'eomint.dcsg.com':
+      case 'dkha0326.dcsg.com':
+      case 'candyjar.dcsg.com':
         return 'http://is-prod1.dcsg.com/rest/v1/inventory';
-      case 'eomdevint.dcsg.com/':
-      case 'dkda3326.dcsg.com/':
-      case 'candyjardev.dcsg.com/':
-      case 'eomdevqa.dcsg.com/':
-      case 'dkda2331.dcsg.com/':
-      case 'candyjarqa.dcsg.com/':
+      case 'eomdevint.dcsg.com':
+      case 'dkda3326.dcsg.com':
+      case 'candyjardev.dcsg.com':
+      case 'eomdevqa.dcsg.com':
+      case 'dkda2331.dcsg.com':
+      case 'candyjarqa.dcsg.com':
       case 'localhost':
         return 'http://esbqa.dcsg.com/rest/v1/inventory';
     }
