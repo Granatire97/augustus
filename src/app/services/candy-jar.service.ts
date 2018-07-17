@@ -11,7 +11,7 @@ import { productInfoEntry } from '../models/productInfoEntry.model';
 })
 export class CandyJarService {
 
-  private serviceUrl = 'http://localhost:8012/';
+  private serviceUrl = window.location.protocol + '//' + window.location.hostname + ':8012/';
   //'http://localhost:8080/SkuHistory?sku=90496373';
 
   constructor(private http: HttpClient) { }
@@ -41,6 +41,7 @@ export class CandyJarService {
   }
 
   getProductInfoEntry(code: string, type: string): Observable<productInfoEntry []>{
+    console.log(this.serviceUrl);
     switch(type){
       case "eCode": 
         var url = `${this.serviceUrl}eCode?eCode=${code}`

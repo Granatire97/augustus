@@ -15,6 +15,7 @@ import { EsbLiveCountEntry } from '../../models/EsbLiveCountEntry.model';
 export class SkuEsbLiveCountComponent implements OnInit {
   show: boolean = false;
   infoFound: boolean;
+  isHome: boolean;
   dataSource: MatTableDataSource<EsbLiveCountEntry>;
   displayedColumns = ['sku', 'atsqty', 'time'];
   @ViewChild(MatSort) sort: MatSort;
@@ -44,6 +45,13 @@ export class SkuEsbLiveCountComponent implements OnInit {
       this.dataSource = null;
       this.show = false;
     }
+
+    this.route.url.subscribe(url => {
+      if(url[0]["path"] === "home"){
+        this.show = false;
+        this.isHome = true;
+      }
+    });
   }
 
   populateTable(sku: string){
@@ -67,7 +75,7 @@ export class SkuEsbLiveCountComponent implements OnInit {
       this.dataSource = new MatTableDataSource<EsbLiveCountEntry>(stream["data"]["skus"]);
       this.dataSource.sort = this.sort;
       if (this.dataSource.data.length != 0){
-        this.show = true;
+        this.show = true && !this.isHome;
       } 
     });
   }

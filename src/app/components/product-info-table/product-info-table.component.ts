@@ -46,7 +46,6 @@ export class ProductInfoTableComponent implements OnInit {
         this.populateTable(result["productCode"], result["productType"]);
       }
     });
-    console.log(this.route);
     const type = this.route.snapshot.paramMap.get('type');
     const code = this.route.snapshot.paramMap.get('code');
     if(type != null && code != null){
@@ -60,6 +59,7 @@ export class ProductInfoTableComponent implements OnInit {
       if(url[0]["path"] === "home"){
         this.showError = false;
         this.isHome = true;
+        this.show = false;
       }
     });
   }
@@ -76,7 +76,7 @@ export class ProductInfoTableComponent implements OnInit {
       if (this.dataSource.data.length == 0){
         this.showError = true && !this.isHome; 
       } else {
-        this.show = true;
+        this.show = true && !this.isHome;
         this.showError = false; 
       }
     });

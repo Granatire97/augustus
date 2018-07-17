@@ -14,6 +14,7 @@ import { EsbInventoryService } from '../../services/esb-inventory.service';
 export class SkuHistoryTableComponent implements OnInit {
   show: boolean = false;
   infoFound: boolean;
+  isHome: boolean;
   dataSource: MatTableDataSource<SkuHistoryEntry>;
   displayedColumns = ['sku', 'atsqty', 'time'];
   @ViewChild(MatSort) sort: MatSort;
@@ -40,6 +41,13 @@ export class SkuHistoryTableComponent implements OnInit {
       this.dataSource = null;
       this.show = false;
     }
+
+    this.route.url.subscribe(url => {
+      if(url[0]["path"] === "home"){
+        this.show = false;
+        this.isHome = true;
+      }
+    });
   }
 
   populateTable(sku: string){
@@ -49,7 +57,7 @@ export class SkuHistoryTableComponent implements OnInit {
       this.dataSource = new MatTableDataSource<SkuHistoryEntry>(stream);
       this.dataSource.sort = this.sort;
       if (this.dataSource.data.length != 0){
-        this.show = true;
+        this.show = true && !this.isHome;
       }
     });
   }

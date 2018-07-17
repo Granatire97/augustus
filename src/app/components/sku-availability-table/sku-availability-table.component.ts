@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SkuAvailabilityTableComponent implements OnInit {
   show: boolean = false;
+  isHome: boolean;
   infoFound: boolean;
   dataSource: MatTableDataSource<SkuAvailableEntry>;
   displayedColumns = ['sku', 'quantity', 'inventoryStatus', 'time'];
@@ -40,6 +41,13 @@ export class SkuAvailabilityTableComponent implements OnInit {
       this.dataSource = null;
       this.show = false;
     }
+
+    this.route.url.subscribe(url => {
+      if(url[0]["path"] === "home"){
+        this.show = false;
+        this.isHome = true;
+      }
+    });
   }
 
   populateTable(sku: string){
@@ -49,7 +57,7 @@ export class SkuAvailabilityTableComponent implements OnInit {
       this.dataSource = new MatTableDataSource<SkuAvailableEntry>(stream);
       this.dataSource.sort = this.sort;
       if (this.dataSource.data.length != 0){
-        this.show = true;
+        this.show = true && !this.isHome;
       } 
     });
   }
