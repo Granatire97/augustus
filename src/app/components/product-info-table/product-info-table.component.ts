@@ -56,8 +56,8 @@ export class ProductInfoTableComponent implements OnInit {
       this.showError = false;
     }
     this.route.url.subscribe(url => {
+      this.showError = false;
       if(url[0]["path"] === "home"){
-        this.showError = false;
         this.isHome = true;
         this.show = false;
       }

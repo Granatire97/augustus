@@ -9,5 +9,6 @@
   <mat-error *ngIf="selectedCode.hasError('required') && searchAttempted">Please select an identifier</mat-error>
 </mat-radio-group>
 <button mat-raised-button id="search-button" (click)="search()">Search</button>
+<h4 *ngIf= "showError" class="error-message">{{errorMessage}}</h4>
 
 
