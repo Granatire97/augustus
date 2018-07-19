@@ -3,7 +3,8 @@ import { CandyJarService } from '../../services/candy-jar.service';
 import { productInfoEntry } from '../../models/productInfoEntry.model';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { CommunicationService } from '../../services/communication.service';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
+import { UtilityService } from '../../services/utility.service';
 
 
 @Component({
@@ -12,9 +13,9 @@ import { ActivatedRoute} from '@angular/router';
   styleUrls: ['./product-info-table.component.css']
 })
 export class ProductInfoTableComponent implements OnInit {
-  show: boolean = false;
   showError: boolean = false;
-  isHome: boolean;
+  spinner: boolean = true;
+  searchResults: any = {"productType":"", "productCode":""};
   dataSource: MatTableDataSource<productInfoEntry>;
   presale: string;
   hotmarket: string;
@@ -34,56 +35,38 @@ export class ProductInfoTableComponent implements OnInit {
   
   constructor(private candyJarService: CandyJarService, 
     private communicationService: CommunicationService,
-    private route: ActivatedRoute
-  ) {}
-
-  ngOnInit() {
-    this.showError = false;
-    this.filters = {"presale": "", "hotmarket": "", "specialOrder": "", "vdceligible": ""};
-    const codeTypes = ['eCode', 'Style', 'SKU', 'UPC'];
-    this.communicationService.currentCode.subscribe(result => {
-      if(codeTypes.indexOf(result["productType"]) != -1){
-        this.populateTable(result["productCode"], result["productType"]);
-      }
-    });
-    const type = this.route.snapshot.paramMap.get('type');
-    const code = this.route.snapshot.paramMap.get('code');
-    if(type != null && code != null){
-      this.populateTable(code, type);
-    } else {
-      this.dataSource = null;
-      this.show = false;
-      this.showError = false;
-    }
-    this.route.url.subscribe(url => {
-      if(url[0]["path"] === "home"){
-        this.showError = false;
-        this.isHome = true;
-        this.show = false;
-      }
-    });
+    private route: ActivatedRoute,
+    private utilityService: UtilityService
+  ) {
+    route.paramMap.subscribe(params => {
+      this.searchResults = params["params"];
+      this.populateTable(this.searchResults["code"], this.searchResults["type"]);
+    })
   }
 
+  ngOnInit() {
+    this.filters = {"presale": "", "hotmarket": "", "specialOrder": "", "vdceligible": ""};
+    const codeTypes = ['eCode', 'Style', 'SKU', 'UPC'];
+  }
 
   populateTable(code: string, type: string){
+    this.spinner = true;
     this.clear();
     this.showError = false;
-    this.show = false;
     code = code.trim();
     this.candyJarService.getProductInfoEntry(code, type).subscribe(stream => {
       this.dataSource = new MatTableDataSource<productInfoEntry>(stream);
       this.dataSource.sort = this.sort;
       if (this.dataSource.data.length == 0){
-        this.showError = true && !this.isHome; 
+        this.showError = true;
       } else {
-        this.show = true && !this.isHome;
-        this.showError = false; 
+        this.showError = false;   
       }
+      this.spinner = false;
     });
   }
 
   applyFilter(filter: string, value: string){
-    console.log(value);
     this.dataSource.filterPredicate = this.createFilter();
     this.filters[filter] = value;
     this.dataSource.filter = JSON.stringify(this.filters);
@@ -123,4 +106,10 @@ export class ProductInfoTableComponent implements OnInit {
     }
     return filterFunction
   }
+
+  export(){
+    const filename = "Product_Info_Table_" + this.searchResults["productType"] + "_" + this.searchResults["productCode"];
+    this.utilityService.exportToCSV(this.dataSource.data, filename, true)
+  }
+
 }

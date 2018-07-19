@@ -4,6 +4,7 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 import { CommunicationService } from '../../services/communication.service';
 import { ActivatedRoute } from '@angular/router';
 import { EsbLiveCountEntry } from '../../models/EsbLiveCountEntry.model';
+import { UtilityService } from '../../services/utility.service';
 
 @Component({
   selector: 'app-sku-esb-live-count',
@@ -12,45 +13,29 @@ import { EsbLiveCountEntry } from '../../models/EsbLiveCountEntry.model';
 })
 export class SkuEsbLiveCountComponent implements OnInit {
   show: boolean = false;
+  searchResults: any = {"productType":"", "productCode":""};
   infoFound: boolean;
-  isHome: boolean;
   dataSource: MatTableDataSource<EsbLiveCountEntry>;
   displayedColumns = ['sku', 'atsqty', 'time'];
-  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private communicationService: CommunicationService,
     private route: ActivatedRoute,
-    private candyJarService: CandyJarService
-  ) {}
-  insert(str, index, value) {
-    return str.substr(0, index) + value + str.substr(index);
-  }
-  ngOnInit() {
-    this.communicationService.currentCode.subscribe(result => {
-      if(result["productType"] === "SKU"){
-        this.populateTable(result["productCode"]);
+    private candyJarService: CandyJarService,
+    private utilityService: UtilityService
+  ) {
+    route.paramMap.subscribe(params => {
+      this.searchResults = params["params"];
+      if(this.searchResults["type"] === "SKU"){
+        this.populateTable(this.searchResults["code"]);
       } else {
         this.dataSource = null;
         this.show = false;
       }
-    })
-    const type = this.route.snapshot.paramMap.get('type');
-    const code = this.route.snapshot.paramMap.get('code');
-    if(type == "SKU" && code != null){
-      this.populateTable(code);
-    } else {
-      this.dataSource = null;
-      this.show = false;
-    }
-
-    this.route.url.subscribe(url => {
-      if(url[0]["path"] === "home"){
-        this.show = false;
-        this.isHome = true;
-      }
     });
   }
+
+  ngOnInit() {}
 
   populateTable(sku: string){
     this.show = false;
@@ -71,10 +56,18 @@ export class SkuEsbLiveCountComponent implements OnInit {
         }
     }
       this.dataSource = new MatTableDataSource<EsbLiveCountEntry>(stream["data"]["skus"]);
-      this.dataSource.sort = this.sort;
       if (this.dataSource.data.length != 0){
-        this.show = true && !this.isHome;
+        this.show = true;
       } 
     });
+  }
+
+  export(){
+    const filename = "Product_Info_Table_" + this.searchResults["productType"] + "_" + this.searchResults["productCode"];
+    this.utilityService.exportToCSV(this.dataSource.data, filename, true)
+  }
+
+  insert(str, index, value) {
+    return str.substr(0, index) + value + str.substr(index);
   }
 }

@@ -19,16 +19,3 @@
     color: white;
     background: #006554;
   }
-
-  #clear-button {
-    color: black;
-    background: orange;
-  }
-
-  .advanced-search {
-    width: 50%;
-  }
-
-  #clear-button {
-    float: right;
-  }

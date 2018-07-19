@@ -42,7 +42,6 @@ export class CandyJarService {
   }
 
   getProductInfoEntry(code: string, type: string): Observable<productInfoEntry []>{
-    console.log(this.serviceUrl);
     switch(type){
       case "eCode": 
         var url = `${this.serviceUrl}eCode?eCode=${code}`

@@ -17,6 +17,22 @@
     flex: 0 0 150px;
 }
 
+#presale-field {
+    width: 70px;
+}
+
+#hotMarket-field {
+    width: 90px;
+}
+
+#specialOrder-field {
+    width: 110px;
+}
+
+#vdceligible-field {
+    width: 110px;
+}
+
 .mat-column-description {
     overflow-x: scroll;
     flex: 0 0 250px;
@@ -33,6 +49,8 @@
 .mat-elevation-z8 {
     display: flex;
     overflow-x: auto;
+    overflow-y:auto;
+    max-height: 600px;
 }
 
 div.mat-elevation-z8::-webkit-scrollbar {
@@ -47,3 +65,35 @@ div.mat-elevation-z8::-webkit-scrollbar-thumb {
 .error-message {
     color: red;
 }
+h3 {
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.spinner{
+    display: table;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link{
+    color: black;
+  }
+  a:visited{
+    color:black;
+  }
+  a:hover{
+    color: #ffc425;
+    text-decoration: underline;
+  }
+  a:focus{
+    color:black;
+  }
+  a:active{
+    color:black;
+  }
+

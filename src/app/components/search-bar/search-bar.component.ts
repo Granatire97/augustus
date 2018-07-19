@@ -19,7 +19,16 @@ export class SearchBarComponent implements OnInit {
     private communicationService: CommunicationService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    route.paramMap.subscribe(params => {
+      if(this.route.snapshot.url[0]["path"] == "home"){
+        this.clear();
+      } else {
+        this.searchInput.setValue(params["params"]["code"]);
+        this.selectedCode.setValue(params["params"]["type"]);
+      }
+    })
+  }
 
   ngOnInit() {
     const type = this.route.snapshot.paramMap.get('type');
@@ -28,6 +37,11 @@ export class SearchBarComponent implements OnInit {
       this.searchInput.setValue(code);
       this.selectedCode.setValue(type);
     }
+  }
+
+  clear(){
+    this.searchInput.setValue("");
+    this.selectedCode.setValue("");
   }
 
   search(){
