@@ -2,7 +2,7 @@
 <h3>Network Level SKU ESB History</h3>
 <button mat-raised-button class="export-button" (click)="export()" color="accent">Export</button>
 <div class="mat-elevation-z8">
-  <mat-table [dataSource]="dataSource">
+  <mat-table [dataSource]="realDataSource" (scroll)="onTableScroll($event)"  >
     <ng-container matColumnDef="sku">
       <mat-header-cell *matHeaderCellDef> SKU </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.sku}} </mat-cell>

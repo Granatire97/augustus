@@ -85,7 +85,9 @@ export class ProductInfoTableComponent implements OnInit {
   applyFilter(filter: string, value: string){
     this.dataSource.filterPredicate = this.createFilter();
     this.filters[filter] = value;
+    this.lines = 20;
     this.dataSource.filter = JSON.stringify(this.filters);
+    this.realDataSource = this.dataSource.filteredData.slice(0,this.lines);
   }
 
   clear(){
@@ -103,21 +105,16 @@ export class ProductInfoTableComponent implements OnInit {
     var flags = [];
     let filterFunction = function(data, filter) : boolean {
       let searchTerms = JSON.parse(filter)
+      var result = true;
       for(var key in searchTerms){
             if(data[key] != null){
               if(searchTerms[key] === "Any" || searchTerms[key].length === 0 || searchTerms[key] === ""){
-                flags.push(true);
               } else {
-                flags.push(data[key].toString().indexOf(searchTerms[key]) != -1);
+                result = result && data[key].toString().indexOf(searchTerms[key]) != -1;
               }
             
         } 
-    }
-      var result = true;
-      var i;
-      for (i = 0; i < flags.length; i++){
-        result = result && flags[i];
-      }    
+    } 
       return result;
     }
     return filterFunction

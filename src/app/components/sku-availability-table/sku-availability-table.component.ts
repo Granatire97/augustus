@@ -14,8 +14,10 @@ export class SkuAvailabilityTableComponent implements OnInit {
   show: boolean = false;
   searchResults: any = {"productType":"", "productCode":""};
   infoFound: boolean;
+  realDataSource: any[] = [];
   dataSource: MatTableDataSource<SkuAvailableEntry>;
   displayedColumns = ['sku', 'quantity', 'inventoryStatus', 'time'];
+  lines: number = 0;
 
   constructor(
     private candyJarService: CandyJarService, 
@@ -33,6 +35,20 @@ export class SkuAvailabilityTableComponent implements OnInit {
     });
   }
 
+  onTableScroll(e) {
+    const tableViewHeight = e.target.offsetHeight // viewport: ~500px
+    const tableScrollHeight = e.target.scrollHeight // length of all table
+    const scrollLocation = e.target.scrollTop; // how far user scrolled
+    
+    // If the user has scrolled within 200px of the bottom, add more data
+    const buffer = 200;
+    const limit = tableScrollHeight - tableViewHeight - buffer; 
+    if (scrollLocation > limit) {
+    this.realDataSource = this.realDataSource.concat(this.dataSource.data.slice(this.lines,this.lines + 20));
+    this.lines += 20;
+    }
+  }
+
   ngOnInit() {}
 
   populateTable(sku: string){
@@ -41,7 +57,9 @@ export class SkuAvailabilityTableComponent implements OnInit {
     this.candyJarService.getSkuAvailableQuantity(sku).subscribe(stream => {
       this.dataSource = new MatTableDataSource<SkuAvailableEntry>(stream);
       if (this.dataSource.data.length != 0){
-        this.show = true;
+        this.show = true; 
+        this.lines = 20;
+        this.realDataSource =  this.dataSource.data.slice(0,this.lines); 
       } 
     });
   }

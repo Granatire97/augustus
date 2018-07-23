@@ -42,8 +42,20 @@
     flex: 0 0 100px;
     margin-left: 15px;
 }
+
+.mat-column-presaleEndDate {
+    flex: 0 0 100px;
+    margin-left: 15px;
+}
+
+
 .mat-column-hotMarket {
     flex: 0 0 120px;
+}
+
+.mat-column-hotMarketEndDate {
+    flex: 0 0 100px;
+    margin-left: 15px;
 }
 
 .mat-elevation-z8 {
