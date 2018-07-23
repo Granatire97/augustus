@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CandyJarService } from '../../services/candy-jar.service';
 import { SkuHistoryEntry } from '../../models/skuHistoryEntry.model';
 import { MatTableDataSource} from '@angular/material';
-import { CommunicationService } from '../../services/communication.service';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from '../../services/utility.service';
 
@@ -18,8 +17,7 @@ export class SkuHistoryTableComponent implements OnInit {
   dataSource: MatTableDataSource<SkuHistoryEntry>;
   displayedColumns = ['sku', 'atsqty', 'time'];
 
-  constructor(private candyJarService: CandyJarService, 
-    private communicationService: CommunicationService,
+  constructor(private candyJarService: CandyJarService,
     private route: ActivatedRoute,
     private utilityService: UtilityService
   ) {

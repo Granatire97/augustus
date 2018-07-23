@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CandyJarService } from '../../services/candy-jar.service';
 import { SkuAvailableEntry } from '../../models/skuAvailableEntry.model';
 import { MatTableDataSource, MatSort } from '@angular/material';
-import { CommunicationService } from '../../services/communication.service';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from '../../services/utility.service';
 
@@ -20,7 +19,6 @@ export class SkuAvailabilityTableComponent implements OnInit {
 
   constructor(
     private candyJarService: CandyJarService, 
-    private communicationService: CommunicationService,
     private route: ActivatedRoute,
     private utilityService: UtilityService
   ) {

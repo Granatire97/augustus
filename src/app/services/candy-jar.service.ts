@@ -21,9 +21,6 @@ export class CandyJarService {
     if(sku.length > 8){
       sku = sku.replace("0", "");
     }
-    if(sku.length < 8){
-      sku = "999999999999";
-    }
     const url = `${this.serviceUrl}SkuHistory?sku=${sku}`
     return this.http.get<SkuHistoryEntry []>(url).pipe(
       catchError(() => of([])));
@@ -32,9 +29,6 @@ export class CandyJarService {
   getSkuAvailableQuantity(sku: string): Observable<SkuAvailableEntry []>{
     if(sku.length > 8){
       sku = sku.replace("0", "");
-    }
-    if(sku.length < 8){
-      sku = "999999999999";
     }
     const url = `${this.serviceUrl}SkuAvailableQuantity?sku=${sku}`
     return this.http.get<SkuAvailableEntry []>(url).pipe(
@@ -71,9 +65,6 @@ export class CandyJarService {
   getESBInventory(sku: string): Observable<EsbLiveCountEntry []> {
     if(sku.length > 8){
       sku = sku.replace("0", "");
-    }
-    if(sku.length < 8){
-      sku = "999999999999";
     }
     const url = `${this.serviceUrl}EsbLiveCount?sku=${sku}`;
     return this.http.get<EsbLiveCountEntry []>(url).pipe(

@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild} from '@angular/core';
 import { CandyJarService } from '../../services/candy-jar.service';
 import { productInfoEntry } from '../../models/productInfoEntry.model';
 import { MatTableDataSource, MatSort } from '@angular/material';
-import { CommunicationService } from '../../services/communication.service';
 import { ActivatedRoute, Router} from '@angular/router';
 import { UtilityService } from '../../services/utility.service';
 
@@ -33,8 +32,7 @@ export class ProductInfoTableComponent implements OnInit {
   displayedColumns = ['ecode', 'style', 'sku', 'upc', 'supc', 'description', 'presale', 'presaleEndDate', 'hotMarket', 'hotMarketEndDate', 'specialOrder', 'vdceligible'];
   @ViewChild(MatSort) sort: MatSort;
   
-  constructor(private candyJarService: CandyJarService, 
-    private communicationService: CommunicationService,
+  constructor(private candyJarService: CandyJarService,
     private route: ActivatedRoute,
     private utilityService: UtilityService
   ) {

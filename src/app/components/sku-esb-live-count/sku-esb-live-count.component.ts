@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CandyJarService } from '../../services/candy-jar.service';
 import { MatTableDataSource, MatSort } from '@angular/material';
-import { CommunicationService } from '../../services/communication.service';
 import { ActivatedRoute } from '@angular/router';
 import { EsbLiveCountEntry } from '../../models/EsbLiveCountEntry.model';
 import { UtilityService } from '../../services/utility.service';
@@ -19,7 +18,6 @@ export class SkuEsbLiveCountComponent implements OnInit {
   displayedColumns = ['sku', 'atsqty', 'time'];
 
   constructor(
-    private communicationService: CommunicationService,
     private route: ActivatedRoute,
     private candyJarService: CandyJarService,
     private utilityService: UtilityService

@@ -9,7 +9,6 @@ import { UtilityService } from './services/utility.service';
 import { MatButtonModule, MatToolbarModule, MatInputModule, MatProgressSpinnerModule, MatProgressBarModule, MatCardModule, MatIconModule, MatTableModule, MatMenuModule, MatTabsModule, MatPaginatorModule, MatGridListModule, MatSortModule, MatRadioModule, MatSnackBarModule, MatListModule, MatExpansionModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
-import { CommunicationService } from './services/communication.service';
 import { SkuAvailabilityTableComponent } from './components/sku-availability-table/sku-availability-table.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductInfoTableComponent } from './components/product-info-table/product-info-table.component';
@@ -63,7 +62,7 @@ import { HomeComponent } from './components/home/home.component';
     MatSelectModule,
     ReactiveFormsModule
   ],
-  providers: [CandyJarService, CommunicationService, UtilityService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [CandyJarService, UtilityService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
