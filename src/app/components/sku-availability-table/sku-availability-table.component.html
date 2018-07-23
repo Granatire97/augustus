@@ -1,8 +1,8 @@
-<div *ngIf= "show">
+<div [hidden]= "!show">
 <h3>Network Level SKU Inventory Sync History</h3>
 <button mat-raised-button class="export-button" (click)="export()" color="accent">Export</button>
 <div class="mat-elevation-z8">
-  <mat-table [dataSource]="realDataSource" (scroll)="onTableScroll($event)">
+  <mat-table [dataSource]="realDataSource" (scroll)="onTableScroll($event)" matSort matSortActive="Time" matSortDirection='desc'>
     <ng-container matColumnDef="sku">
       <mat-header-cell *matHeaderCellDef> SKU </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.SKU}} </mat-cell>
@@ -15,7 +15,7 @@
       <mat-header-cell *matHeaderCellDef> Inventory Status </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.InventoryStatus}} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="time">
+    <ng-container matColumnDef="Time">
       <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.Time}} </mat-cell>
     </ng-container>

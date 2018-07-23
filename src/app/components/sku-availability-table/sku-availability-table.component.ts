@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CandyJarService } from '../../services/candy-jar.service';
 import { SkuAvailableEntry } from '../../models/skuAvailableEntry.model';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort} from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from '../../services/utility.service';
 
@@ -14,10 +14,11 @@ export class SkuAvailabilityTableComponent implements OnInit {
   show: boolean = false;
   searchResults: any = {"productType":"", "productCode":""};
   infoFound: boolean;
-  realDataSource: any[] = [];
+  realDataSource = new MatTableDataSource<SkuAvailableEntry>();
   dataSource: MatTableDataSource<SkuAvailableEntry>;
-  displayedColumns = ['sku', 'quantity', 'inventoryStatus', 'time'];
+  displayedColumns = ['sku', 'quantity', 'inventoryStatus', 'Time'];
   lines: number = 0;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private candyJarService: CandyJarService, 
@@ -44,22 +45,27 @@ export class SkuAvailabilityTableComponent implements OnInit {
     const buffer = 200;
     const limit = tableScrollHeight - tableViewHeight - buffer; 
     if (scrollLocation > limit) {
-    this.realDataSource = this.realDataSource.concat(this.dataSource.data.slice(this.lines,this.lines + 20));
-    this.lines += 20;
+      this.realDataSource.data = this.realDataSource.data.concat(this.dataSource.data.slice(this.lines,this.lines + 20));
+      this.lines += 20;
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.realDataSource.sort = this.sort;
+  }
 
   populateTable(sku: string){
     this.show = false;
     sku = sku.trim();
     this.candyJarService.getSkuAvailableQuantity(sku).subscribe(stream => {
       this.dataSource = new MatTableDataSource<SkuAvailableEntry>(stream);
+      this.dataSource.sort = this.sort;
+      this.dataSource.sortData(this.dataSource.data, this.sort);
+      this.realDataSource.sort = this.sort;
       if (this.dataSource.data.length != 0){
         this.show = true; 
         this.lines = 20;
-        this.realDataSource =  this.dataSource.data.slice(0,this.lines); 
+        this.realDataSource.data  = this.dataSource.data.slice(0,this.lines);
       } 
     });
   }
@@ -68,5 +74,5 @@ export class SkuAvailabilityTableComponent implements OnInit {
     const filename = "Product_Info_Table_" + this.searchResults["productType"] + "_" + this.searchResults["productCode"];
     this.utilityService.exportToCSV(this.dataSource.data, filename, true)
   }
-
 }
+
