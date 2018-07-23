@@ -9,7 +9,7 @@
 <h3>Product Info</h3>
 <button mat-raised-button class="export-button" (click)="export()" color="accent">Export</button>
 <div class="mat-elevation-z8">
-  <mat-table [dataSource]="dataSource" matSort>
+  <mat-table [dataSource]="realDataSource" matSort (scroll)="onTableScroll($event)">
     <ng-container matColumnDef="ecode">
       <mat-header-cell *matHeaderCellDef mat-sort-header> eCode </mat-header-cell>
       <mat-cell *matCellDef="let row"><a routerLink="/info/eCode/{{row.ecode}}">{{row.ecode}}</a></mat-cell>

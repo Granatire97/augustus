@@ -49,8 +49,12 @@
 .mat-elevation-z8 {
     display: flex;
     overflow-x: auto;
+    
+}
+
+.mat-table {
     overflow-y:auto;
-    max-height: 600px;
+    max-height: 500px;
 }
 
 div.mat-elevation-z8::-webkit-scrollbar {

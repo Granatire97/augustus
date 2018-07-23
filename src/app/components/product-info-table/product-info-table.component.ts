@@ -15,6 +15,7 @@ export class ProductInfoTableComponent implements OnInit {
   showError: boolean = false;
   spinner: boolean = true;
   searchResults: any = {"productType":"", "productCode":""};
+  realDataSource: any[] = [];
   dataSource: MatTableDataSource<productInfoEntry>;
   presale: string;
   hotmarket: string;
@@ -27,6 +28,7 @@ export class ProductInfoTableComponent implements OnInit {
   codes: string[] = ['eCode', 'Style', 'SKU', 'UPC'];
   booleanOptions: string[] = ['0', '1'];
   yesNoOptions: string[] = ['N', 'Y'];
+  lines: number = 0;
   
   filters: {}
   displayedColumns = ['ecode', 'style', 'sku', 'upc', 'supc', 'description', 'presale', 'presaleEndDate', 'hotMarket', 'hotMarketEndDate', 'specialOrder', 'vdceligible'];
@@ -40,6 +42,20 @@ export class ProductInfoTableComponent implements OnInit {
       this.searchResults = params["params"];
       this.populateTable(this.searchResults["code"], this.searchResults["type"]);
     })
+  }
+
+  onTableScroll(e) {
+    const tableViewHeight = e.target.offsetHeight // viewport: ~500px
+    const tableScrollHeight = e.target.scrollHeight // length of all table
+    const scrollLocation = e.target.scrollTop; // how far user scrolled
+    
+    // If the user has scrolled within 200px of the bottom, add more data
+    const buffer = 200;
+    const limit = tableScrollHeight - tableViewHeight - buffer; 
+    if (scrollLocation > limit) {
+    this.realDataSource = this.realDataSource.concat(this.dataSource.data.slice(this.lines,this.lines + 20));
+    this.lines += 20;
+    }
   }
 
   ngOnInit() {
@@ -58,7 +74,9 @@ export class ProductInfoTableComponent implements OnInit {
       if (this.dataSource.data.length == 0){
         this.showError = true;
       } else {
-        this.showError = false;   
+        this.showError = false;  
+        this.lines = 20;
+        this.realDataSource =  this.dataSource.data.slice(0,this.lines); 
       }
       this.spinner = false;
     });
