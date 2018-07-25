@@ -1,14 +1,12 @@
 <mat-form-field class="search-form-field">
   <input [formControl]="searchInput" matInput id="search-bar" (keyup.enter)="search()" placeholder="Enter an eCode, Style, SKU, or UPC">
-  <mat-error *ngIf="searchInput.hasError('required')">Please enter a product identification code</mat-error>
 </mat-form-field>
 <mat-radio-group class="code-radio-group" [formControl]="selectedCode">
   <mat-radio-button class="code-radio-button" *ngFor="let code of codes" [value]="code">
     {{code}}
   </mat-radio-button>
-  <mat-error *ngIf="selectedCode.hasError('required') && searchAttempted">Please select an identifier</mat-error>
 </mat-radio-group>
 <button mat-raised-button id="search-button" (click)="search()">Search</button>
-<h4 *ngIf= "showError" class="error-message">{{errorMessage}}</h4>
+
 
 

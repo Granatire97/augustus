@@ -1,37 +1,36 @@
-<h4 *ngIf="showError" class="error-message">There was no data found for the desired input. Please check your input and try again.</h4>
 <div *ngIf="spinner" class="spinner center">
   <div class="spinner">
     <mat-spinner></mat-spinner>
   </div>
     <h4>Your data will come, it just may take a while. Good things come to those who wait.</h4>
   </div>
-<div *ngIf="!showError && !spinner">
+<div *ngIf="!spinner">
 <h3>Product Info</h3>
 <button mat-raised-button class="export-button" (click)="export()" color="accent">Export</button>
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="realDataSource" matSort (scroll)="onTableScroll($event)">
     <ng-container matColumnDef="ecode">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> eCode </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef > eCode </mat-header-cell>
       <mat-cell *matCellDef="let row"><a routerLink="/info/eCode/{{row.ecode}}">{{row.ecode}}</a></mat-cell>
     </ng-container>
     <ng-container matColumnDef="style">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Style </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef > Style </mat-header-cell>
       <mat-cell *matCellDef="let row"><a routerLink="/info/Style/{{row.style}}">{{row.style}}</a></mat-cell>
     </ng-container>
     <ng-container matColumnDef="sku">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> SKU </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef > SKU </mat-header-cell>
       <mat-cell *matCellDef="let row"><a routerLink="/info/SKU/{{row.sku}}">{{row.sku}}</a></mat-cell>
     </ng-container>
     <ng-container matColumnDef="upc">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> UPC </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef > UPC </mat-header-cell>
       <mat-cell *matCellDef="let row"><a routerLink="/info/UPC/{{row.upc}}">{{row.upc}}</a></mat-cell>
     </ng-container>
     <ng-container matColumnDef="supc">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Alternate UPC </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef > Alternate UPC </mat-header-cell>
       <mat-cell *matCellDef="let row"><a routerLink="/info/UPC/{{row.supc}}">{{row.supc}}</a></mat-cell>
     </ng-container>
     <ng-container matColumnDef="description">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef > Description </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
       </ng-container>
     <ng-container matColumnDef="presale">
@@ -48,7 +47,7 @@
       <mat-cell *matCellDef="let row"> {{row.presale}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="presaleEndDate">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Presale End Date </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef > Presale End Date </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.presaleEndDate}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="hotMarket">
@@ -65,7 +64,7 @@
       <mat-cell *matCellDef="let row"> {{row.hotMarket}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="hotMarketEndDate">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Hot Market End Date </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef > Hot Market End Date </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.hotMarketEndDate}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="specialOrder">

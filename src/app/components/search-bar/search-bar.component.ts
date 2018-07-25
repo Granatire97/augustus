@@ -8,13 +8,12 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./search-bar.component.css']
 })
 export class SearchBarComponent implements OnInit {
-  showError: boolean = false;
   errorMessage: string;
+  errorType: string;
   searchInput = new FormControl('', [Validators.required]);
   selectedCode = new FormControl('', [Validators.required]);
   codes: string[] = ['eCode', 'Style', 'SKU', 'UPC'];
   searchAttempted: boolean = false;
-
   
   constructor(
     private route: ActivatedRoute,
@@ -24,7 +23,7 @@ export class SearchBarComponent implements OnInit {
       if(this.route.snapshot.url[0]["path"] == "home"){
         this.clear();
       } else {
-        this.searchInput.setValue(params["params"]["code"]);
+        this.searchInput.setValue(params["params"]["code"].toUpperCase());
         this.selectedCode.setValue(params["params"]["type"]);
       }
     })
@@ -34,7 +33,7 @@ export class SearchBarComponent implements OnInit {
     const type = this.route.snapshot.paramMap.get('type');
     const code = this.route.snapshot.paramMap.get('code');
     if(type != null && code != null){
-      this.searchInput.setValue(code);
+      this.searchInput.setValue(code.toUpperCase());
       this.selectedCode.setValue(type);
     }
   }
@@ -45,33 +44,38 @@ export class SearchBarComponent implements OnInit {
   }
 
   search(){
-    this.showError = false;
     this.searchAttempted = true;
-    if(this.validateInput(this.searchInput.value.trim(), this.selectedCode.value.trim())){
-      this.router.navigate(['info', this.selectedCode.value, this.searchInput.value]);
+
+    if(this.validateInput(this.searchInput.value.toUpperCase().trim(), this.selectedCode.value.trim())){
+      this.router.navigate(['info', this.selectedCode.value, this.searchInput.value.toUpperCase()]);
     }
-    
+
+    if (this.selectedCode.hasError('required')){
+      this.errorType = "selectanidentifier";
+      this.router.navigate(['error', this.errorType, this.selectedCode.value, this.searchInput.value.toUpperCase()]);
+    }
+
   }
 
   validateInput(code: string, type: string){
     if(code === "" && type === ""){
       return false;
-    }    
+    }   
     switch(type){
       case "eCode":
         if(code.length >= 10 && code.length <= 40 && code.match(/^[0-9a-zA-Z]+$/)){
           return true;
         } else {
-          this.errorMessage = "eCodes should be at least 10 characters and contain only letters and numbers.";
-          this.showError = true;
+          this.errorType = "ecode";
+          this.router.navigate(['error', this.errorType, this.selectedCode.value, this.searchInput.value.toUpperCase()]);
           return false;
         }
       case "Style":
         if(code.match(/^[0-9a-zA-Z-_.&:?^,@#$%^&*()]+$/)){
           return true;
         } else {
-          this.errorMessage = "The style you inputted is invalid.";
-          this.showError = true;
+          this.errorType = "style";
+          this.router.navigate(['error', this.errorType, this.selectedCode.value, this.searchInput.value.toUpperCase()]);
           return false;
         }
       case "SKU":
@@ -79,16 +83,16 @@ export class SearchBarComponent implements OnInit {
           return true;
         }
         else {
-          this.errorMessage = "SKUs should be between 8-9 character and contain only numbers.";
-          this.showError = true;
+          this.errorType = "sku";
+          this.router.navigate(['error', this.errorType, this.selectedCode.value, this.searchInput.value]);
           return false;
         }
       case "UPC":
         if(code.match(/^[0-9]+$/)){
-          return true
+          return true;
         }else {
-          this.errorMessage = "UPCs should only contain numbers.";
-          this.showError = true;
+          this.errorType = "upc";
+          this.router.navigate(['error', this.errorType, this.selectedCode.value, this.searchInput.value]);
           return false;
         } 
     }

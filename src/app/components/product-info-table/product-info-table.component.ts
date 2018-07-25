@@ -12,7 +12,7 @@ import { UtilityService } from '../../services/utility.service';
   styleUrls: ['./product-info-table.component.css']
 })
 export class ProductInfoTableComponent implements OnInit {
-  showError: boolean = false;
+  errorType: string;
   spinner: boolean = true;
   searchResults: any = {"productType":"", "productCode":""};
   realDataSource: any[] = [];
@@ -36,7 +36,8 @@ export class ProductInfoTableComponent implements OnInit {
   
   constructor(private candyJarService: CandyJarService,
     private route: ActivatedRoute,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private router: Router
   ) {
     route.paramMap.subscribe(params => {
       this.searchResults = params["params"];
@@ -66,15 +67,15 @@ export class ProductInfoTableComponent implements OnInit {
   populateTable(code: string, type: string){
     this.spinner = true;
     this.clear();
-    this.showError = false;
     code = code.trim();
+    code.toLowerCase;
     this.candyJarService.getProductInfoEntry(code, type).subscribe(stream => {
       this.dataSource = new MatTableDataSource<productInfoEntry>(stream);
       this.dataSource.sort = this.sort;
       if (this.dataSource.data.length == 0){
-        this.showError = true;
-      } else {
-        this.showError = false;  
+        this.errorType = "noresults";
+        this.router.navigate(['error', this.errorType, type, code]);
+      } else { 
         this.lines = 20;
         this.realDataSource =  this.dataSource.data.slice(0,this.lines); 
       }

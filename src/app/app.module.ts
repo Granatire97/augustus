@@ -17,6 +17,7 @@ import { ProductDisplayComponent } from './components/product-display/product-di
 import { SkuEsbLiveCountComponent } from './components/sku-esb-live-count/sku-esb-live-count.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
+import { ErrorMessageComponent } from './components/error-message/error-message.component';
 
 
 
@@ -32,7 +33,8 @@ import { HomeComponent } from './components/home/home.component';
     ProductInfoTableComponent,
     ProductDisplayComponent,
     SkuEsbLiveCountComponent,
-    HomeComponent
+    HomeComponent,
+    ErrorMessageComponent
   ],
   imports: [
     BrowserModule,
