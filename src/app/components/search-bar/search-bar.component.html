@@ -9,7 +9,7 @@
 </mat-form-field>
 <br>
 <mat-form-field class="search-form-field" >
-  <input  matInput formControlName="searchInput" id="search-bar" (keyup.enter)="search()" placeholder="Enter an eCode, Style, SKU, or UPC">
+  <input  matInput formControlName="searchInput" id="search-bar" (keyup.enter)="onSubmit()" placeholder="Enter an eCode, Style, SKU, or UPC">
 </mat-form-field>
 <mat-radio-group class="code-radio-group" formControlName="selectedCode">
   <mat-radio-button class="code-radio-button" *ngFor="let code of codes" [value]="code">
