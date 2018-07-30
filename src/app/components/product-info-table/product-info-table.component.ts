@@ -54,7 +54,7 @@ export class ProductInfoTableComponent implements OnInit {
     const buffer = 200;
     const limit = tableScrollHeight - tableViewHeight - buffer; 
     if (scrollLocation > limit) {
-    this.realDataSource = this.realDataSource.concat(this.dataSource.data.slice(this.lines,this.lines + 20));
+    this.realDataSource = this.realDataSource.concat(this.dataSource.filteredData.slice(this.lines,this.lines + 20));
     this.lines += 20;
     }
   }
@@ -74,7 +74,9 @@ export class ProductInfoTableComponent implements OnInit {
       this.dataSource.sort = this.sort;
       if (this.dataSource.data.length == 0){
         this.errorType = "noresults";
-        this.router.navigate(['error', this.errorType, type, code]);
+        const mode = this.route.snapshot.url[0]["path"];
+        const location = this.route.snapshot.params["location"];
+        this.router.navigate(['error', this.errorType, mode, type, code, location]);
       } else { 
         this.lines = 20;
         this.realDataSource =  this.dataSource.data.slice(0,this.lines); 
@@ -124,6 +126,13 @@ export class ProductInfoTableComponent implements OnInit {
   export(){
     const filename = "Product_Info_Table_" + this.searchResults["productType"] + "_" + this.searchResults["productCode"];
     this.utilityService.exportToCSV(this.dataSource.data, filename, true)
+  }
+
+  goToCode(type: string, code: string){
+    const mode = this.route.snapshot.url[0]["path"];
+    const location = this.route.snapshot.params["location"] != null ? this.route.snapshot.params["location"] : "";
+
+    this.router.navigate(['/' + mode, type,  code, location]);
   }
 
 }

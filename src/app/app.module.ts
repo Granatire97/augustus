@@ -18,6 +18,8 @@ import { SkuEsbLiveCountComponent } from './components/sku-esb-live-count/sku-es
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { SkuBopisHistoryTableComponent } from './components/sku-bopis-history-table/sku-bopis-history-table.component';
+import { SkuBopisDisplayComponent } from './components/sku-bopis-display/sku-bopis-display.component';
 
 
 
@@ -34,7 +36,9 @@ import { ErrorMessageComponent } from './components/error-message/error-message.
     ProductDisplayComponent,
     SkuEsbLiveCountComponent,
     HomeComponent,
-    ErrorMessageComponent
+    ErrorMessageComponent,
+    SkuBopisHistoryTableComponent,
+    SkuBopisDisplayComponent
   ],
   imports: [
     BrowserModule,

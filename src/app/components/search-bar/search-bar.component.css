@@ -15,6 +15,11 @@
       width: 30%;
   }
 
+  #storeInput {
+    width: 20%;
+    margin-right: 15px;
+  }
+
   #search-button {
     color: white;
     background: #006554;

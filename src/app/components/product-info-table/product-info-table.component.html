@@ -11,23 +11,23 @@
   <mat-table [dataSource]="realDataSource" matSort (scroll)="onTableScroll($event)">
     <ng-container matColumnDef="ecode">
       <mat-header-cell *matHeaderCellDef > eCode </mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/info/eCode/{{row.ecode}}">{{row.ecode}}</a></mat-cell>
+      <mat-cell *matCellDef="let row"><a (click)="goToCode('eCode', row.ecode)">{{row.ecode}}</a></mat-cell>
     </ng-container>
     <ng-container matColumnDef="style">
       <mat-header-cell *matHeaderCellDef > Style </mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/info/Style/{{row.style}}">{{row.style}}</a></mat-cell>
+      <mat-cell *matCellDef="let row"><a (click)="goToCode('Style', row.style)">{{row.style}}</a></mat-cell>
     </ng-container>
     <ng-container matColumnDef="sku">
       <mat-header-cell *matHeaderCellDef > SKU </mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/info/SKU/{{row.sku}}">{{row.sku}}</a></mat-cell>
+      <mat-cell *matCellDef="let row"><a (click)="goToCode('SKU', row.sku)">{{row.sku}}</a></mat-cell>
     </ng-container>
     <ng-container matColumnDef="upc">
       <mat-header-cell *matHeaderCellDef > UPC </mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/info/UPC/{{row.upc}}">{{row.upc}}</a></mat-cell>
+      <mat-cell *matCellDef="let row"><a (click)="goToCode('UPC', row.upc)">{{row.upc}}</a></mat-cell>
     </ng-container>
     <ng-container matColumnDef="supc">
       <mat-header-cell *matHeaderCellDef > Alternate UPC </mat-header-cell>
-      <mat-cell *matCellDef="let row"><a routerLink="/info/UPC/{{row.supc}}">{{row.supc}}</a></mat-cell>
+      <mat-cell *matCellDef="let row"><a (click)="goToCode('UPC', row.supc)">{{row.supc}}</a></mat-cell>
     </ng-container>
     <ng-container matColumnDef="description">
         <mat-header-cell *matHeaderCellDef > Description </mat-header-cell>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-search-bar',
@@ -10,64 +10,95 @@ import { FormControl, Validators } from '@angular/forms';
 export class SearchBarComponent implements OnInit {
   errorMessage: string;
   errorType: string;
-  searchInput = new FormControl('', [Validators.required]);
-  selectedCode = new FormControl('', [Validators.required]);
+  searchForm = new FormGroup({
+    searchInput: new FormControl('', [Validators.required]),
+    selectedCode: new FormControl('', [Validators.required]),
+    locationInput: new FormControl({value: '', disabled: true}),
+    selectedSearchMode: new FormControl('Network Inventory', [Validators.required]),
+  });
   codes: string[] = ['eCode', 'Style', 'SKU', 'UPC'];
-  searchAttempted: boolean = false;
-  
+  searchMode: string[] = ['Network Inventory', 'Store Inventory'];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router
   ) {
     route.paramMap.subscribe(params => {
-      if(this.route.snapshot.url[0]["path"] == "home"){
-        this.clear();
-      } else {
-        this.searchInput.setValue(params["params"]["code"].toUpperCase());
-        this.selectedCode.setValue(params["params"]["type"]);
+      switch(this.route.snapshot.url[0]["path"]){
+        case "home":
+          this.clear();
+          break;
+        case "store":
+        this.searchForm.setValue({
+          "searchInput": params["params"]["code"].toUpperCase(),
+          "selectedCode": params["params"]["type"],
+          "locationInput": params["params"]["location"] || "",
+          "selectedSearchMode": 'Store Inventory'
+        });
+        break;
+        case "network":
+        this.searchForm.setValue({
+          "searchInput": params["params"]["code"].toUpperCase(),
+          "selectedCode": params["params"]["type"],
+          "locationInput": params["params"]["location"] || "",
+          "selectedSearchMode": 'Network Inventory'
+        });
+        break;
+        case "error":
+        this.searchForm.setValue({
+          "searchInput": params["params"]["code"].toUpperCase(),
+          "selectedCode": params["params"]["type"],
+          "locationInput": params["params"]["location"] || "",
+          "selectedSearchMode": params["params"]["mode"] == 'network' ? 'Network Inventory' : 'Store Inventory'
+        });
+         
       }
-    })
+      this.setMode();
+    });
   }
 
-  ngOnInit() {
-    const type = this.route.snapshot.paramMap.get('type');
-    const code = this.route.snapshot.paramMap.get('code');
-    if(type != null && code != null){
-      this.searchInput.setValue(code.toUpperCase());
-      this.selectedCode.setValue(type);
-    }
-  }
+  ngOnInit() {}
 
   clear(){
-    this.searchInput.setValue("");
-    this.selectedCode.setValue("");
+
+    this.searchForm.setValue({
+      "searchInput": "",
+      "selectedCode": "",
+      "locationInput": "",
+      "selectedSearchMode": this.searchForm.get("selectedSearchMode").value
+    });
   }
 
-  search(){
-    this.searchAttempted = true;
-
-    if(this.validateInput(this.searchInput.value.toUpperCase().trim(), this.selectedCode.value.trim())){
-      this.router.navigate(['info', this.selectedCode.value, this.searchInput.value.toUpperCase()]);
-    }
-
-    if (this.selectedCode.hasError('required')){
+  onSubmit(){
+    const code = this.searchForm.get("searchInput").value.toUpperCase().trim();
+    const type = this.searchForm.get("selectedCode").value.trim();
+    const location = this.searchForm.get("locationInput").value.trim();
+    const mode = this.searchForm.get("selectedSearchMode").value == 'Network Inventory' ? 'network' : 'store';
+    if(this.validateInput(mode, type, code, location)){
+      this.router.navigate([mode, type, code, location]);
+    } else if (this.searchForm.get("selectedCode").hasError('required')){
       this.errorType = "selectanidentifier";
-      this.router.navigate(['error', this.errorType, this.selectedCode.value, this.searchInput.value.toUpperCase()]);
+      this.router.navigate(['error', this.errorType, mode, type, code, location]);
     }
 
   }
 
-  validateInput(code: string, type: string){
+  validateInput(mode: string, type: string, code: string, location: string){
     if(code === "" && type === ""){
       return false;
-    }   
+    }  
+    if(!location.match(/^[0-9]+$/) && mode == 'store'){
+      this.errorType = "location";
+      this.router.navigate(['error', this.errorType, mode, type, code, location]);
+      return false;
+    }
     switch(type){
       case "eCode":
         if(code.length >= 10 && code.length <= 40 && code.match(/^[0-9a-zA-Z]+$/)){
           return true;
         } else {
           this.errorType = "ecode";
-          this.router.navigate(['error', this.errorType, this.selectedCode.value, this.searchInput.value.toUpperCase()]);
+          this.router.navigate(['error', this.errorType, mode, type, code, location]);
           return false;
         }
       case "Style":
@@ -75,7 +106,7 @@ export class SearchBarComponent implements OnInit {
           return true;
         } else {
           this.errorType = "style";
-          this.router.navigate(['error', this.errorType, this.selectedCode.value, this.searchInput.value.toUpperCase()]);
+          this.router.navigate(['error', this.errorType, mode, type, code, location]);
           return false;
         }
       case "SKU":
@@ -84,7 +115,7 @@ export class SearchBarComponent implements OnInit {
         }
         else {
           this.errorType = "sku";
-          this.router.navigate(['error', this.errorType, this.selectedCode.value, this.searchInput.value]);
+          this.router.navigate(['error', this.errorType, mode, type, code, location]);
           return false;
         }
       case "UPC":
@@ -92,12 +123,21 @@ export class SearchBarComponent implements OnInit {
           return true;
         }else {
           this.errorType = "upc";
-          this.router.navigate(['error', this.errorType, this.selectedCode.value, this.searchInput.value]);
+          this.router.navigate(['error', this.errorType, mode, type, code, location]);
           return false;
         } 
     }
     return false;
   }
 
+  setMode(){
+    if(this.searchForm.get("selectedSearchMode").value === "Store Inventory"){
+      this.searchForm.get("locationInput").enable();
+      this.searchForm.get("locationInput").setValidators(Validators.required);
+    } else {
+      this.searchForm.get("locationInput").disable();
+      this.searchForm.get("locationInput").clearValidators();
+    }
+  }
 
 }

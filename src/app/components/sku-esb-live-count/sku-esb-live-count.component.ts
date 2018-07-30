@@ -16,6 +16,7 @@ export class SkuEsbLiveCountComponent implements OnInit {
   infoFound: boolean;
   dataSource: MatTableDataSource<EsbLiveCountEntry>;
   displayedColumns = ['sku', 'atsqty', 'time'];
+  mode: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,7 +26,16 @@ export class SkuEsbLiveCountComponent implements OnInit {
     route.paramMap.subscribe(params => {
       this.searchResults = params["params"];
       if(this.searchResults["type"] === "SKU"){
-        this.populateTable(this.searchResults["code"]);
+        this.mode = this.route.snapshot.url[0]["path"];
+        const location = this.mode === 'store' ? this.route.snapshot.params["location"] : '0';
+        this.populateTable(location,this.searchResults["code"]);
+      } else if(this.searchResults["type"] === "UPC"){
+        this.mode = this.route.snapshot.url[0]["path"];
+        const location = this.mode === 'store' ? this.route.snapshot.params["location"] : '0';
+        this.candyJarService.getSkuByUpc(this.searchResults["code"]).subscribe(stream => {
+          const sku = stream["sku"];
+          this.populateTable(location, sku);
+        });
       } else {
         this.dataSource = null;
         this.show = false;
@@ -35,10 +45,11 @@ export class SkuEsbLiveCountComponent implements OnInit {
 
   ngOnInit() {}
 
-  populateTable(sku: string){
+  populateTable(location: string, sku: string){
     this.show = false;
+    location = location.trim();
     sku = sku.trim();
-    this.candyJarService.getESBInventory(sku).subscribe(stream => {
+    this.candyJarService.getESBInventory(location, sku).subscribe(stream => {
     
       var i;
       for(i = 0; i< stream["data"]["skus"].length; i++){

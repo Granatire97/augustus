@@ -19,6 +19,7 @@ export class SkuHistoryTableComponent implements OnInit {
   displayedColumns = ['sku', 'atsqty', 'time'];
   lines: number = 0;
   @ViewChild(MatSort) sort: MatSort;
+  mode: string;
 
   constructor(private candyJarService: CandyJarService,
     private route: ActivatedRoute,
@@ -27,7 +28,16 @@ export class SkuHistoryTableComponent implements OnInit {
     route.paramMap.subscribe(params => {
       this.searchResults = params["params"];
       if(this.searchResults["type"] === "SKU"){
+        this.mode = this.route.snapshot.url[0]["path"];
+        const location = this.mode === 'store' ? this.route.snapshot.params["location"] : '0';
         this.populateTable(this.searchResults["code"]);
+      } else if(this.searchResults["type"] === "UPC"){
+        this.mode = this.route.snapshot.url[0]["path"];
+        const location = this.mode === 'store' ? this.route.snapshot.params["location"] : '0';
+        this.candyJarService.getSkuByUpc(this.searchResults["code"]).subscribe(stream => {
+          const sku = stream["sku"];
+          this.populateTable(sku);
+        });
       } else {
         this.dataSource = null;
         this.show = false;

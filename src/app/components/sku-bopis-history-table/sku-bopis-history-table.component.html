@@ -1,0 +1,30 @@
+<div [hidden]= "!show">
+  <h3>Store Level SKU ESB Bopis History</h3>
+  <button mat-raised-button class="export-button" (click)="export()" color="accent">Export</button>
+  <div class="mat-elevation-z8">
+    <mat-table [dataSource]="realDataSource" (scroll)="onTableScroll($event)" matSort matSortActive="time" matSortDirection='desc'>
+      <ng-container matColumnDef="location">
+        <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.location}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="sku">
+        <mat-header-cell *matHeaderCellDef> SKU </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.sku}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="atsqty">
+        <mat-header-cell *matHeaderCellDef> Bopis Quantity </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.atsqty}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="isaqty">
+        <mat-header-cell *matHeaderCellDef> In Store Available Quantity </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.isaqty}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="time">
+        <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.time}} </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+  </div>

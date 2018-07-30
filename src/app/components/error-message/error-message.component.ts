@@ -30,6 +30,8 @@ export class ErrorMessageComponent implements OnInit {
       this.errorMessage = "UPCs should only contain numbers.";
     else if (this.route.snapshot.url[1]["path"] == "noresults")
       this.errorMessage = "Sorry we couldn't find any results for you. Please check your input and try again :)";
+    else if (this.route.snapshot.url[1]["path"] == "location")
+      this.errorMessage = "Store numbers should only contain numbers and cannot be empty when using the 'Store Inventory' option";
     })
   }
 

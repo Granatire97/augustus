@@ -34,8 +34,9 @@
 }
 
 .mat-column-description {
-    overflow-x: scroll;
+    overflow-x: auto;
     flex: 0 0 250px;
+    margin: 5px 0;
 }
 
 .mat-column-presale {
@@ -56,13 +57,8 @@
 .mat-column-hotMarketEndDate {
     flex: 0 0 100px;
     margin-left: 15px;
-}
+} 
 
-.mat-elevation-z8 {
-    display: flex;
-    overflow-x: auto;
-    
-}
 
 .mat-table {
     overflow-y:auto;
@@ -95,6 +91,7 @@ h3 {
 
 a {
     text-decoration: none;
+    cursor: pointer;
 }
 
 a:link{

@@ -6,6 +6,7 @@ import { SkuHistoryEntry } from '../models/skuHistoryEntry.model';
 import { SkuAvailableEntry } from '../models/skuAvailableEntry.model'; 
 import { productInfoEntry } from '../models/productInfoEntry.model';
 import { EsbLiveCountEntry } from '../models/EsbLiveCountEntry.model';
+import { SkuBopisHistoryEntry } from '../models/skuBopisHistoryEntry.model';
 
 @Injectable({
   providedIn: 'root'
@@ -62,12 +63,29 @@ export class CandyJarService {
     }
   }
 
-  getESBInventory(sku: string): Observable<EsbLiveCountEntry []> {
+  getESBInventory(location: string, sku: string): Observable<EsbLiveCountEntry []> {
     if(sku.length > 8){
       sku = sku.replace("0", "");
     }
-    const url = `${this.serviceUrl}EsbLiveCount?sku=${sku}`;
+    const url = `${this.serviceUrl}EsbLiveCount?location=${location}&sku=${sku}`;
     return this.http.get<EsbLiveCountEntry []>(url).pipe(
+      catchError(() => of([])));
+  }
+  getSkuBopisHistory(location: string, sku: string): Observable<SkuBopisHistoryEntry []> {
+    if(sku.length > 8){
+      sku = sku.replace("0", "");
+    }
+    const url = `${this.serviceUrl}SkuBopisHistory?sku=${sku}&location=${location}`;
+    return this.http.get<SkuBopisHistoryEntry []>(url).pipe(
+      catchError(() => of([])));
+  }
+
+  getSkuByUpc(upc: string): Observable<string []>{
+    if(upc.length < 12){
+      upc = upc.padStart(12,"0");
+    }
+    const url = `${this.serviceUrl}skuByUpc?upc=${upc}`;
+    return this.http.get<string []>(url).pipe(
       catchError(() => of([])));
   }
 }

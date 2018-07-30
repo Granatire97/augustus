@@ -1,5 +1,5 @@
 <div *ngIf= "show">
-<h3>Network Level SKU ESB Live Count</h3>
+<h3>{{mode | titlecase}} Level SKU ESB Live Count</h3>
 <button mat-raised-button class="export-button" (click)="export()" color="accent">Export</button>
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="dataSource">
