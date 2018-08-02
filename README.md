@@ -1,4 +1,4 @@
-# Operation CandyJar
+# Augustus (frontend for Operation CandyJar)
 
 The Frontend for a service that allows users to input any type of product identifier and get back the information that goes with that product identifier. 
 
